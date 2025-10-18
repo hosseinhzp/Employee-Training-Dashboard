@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { useTheme } from 'next-themes'
+import { SidebarTrigger } from './ui/sidebar'
 
 
 const NavBar = () => {
@@ -24,7 +25,7 @@ const NavBar = () => {
   return (
     <nav className='flex items-center justify-between p-4 sticky'>
       {/* LEFT */}
-      CollapsableButton
+      <SidebarTrigger/>
 
       {/* RIGHT */}
       <div className='flex items-center gap-4'>
