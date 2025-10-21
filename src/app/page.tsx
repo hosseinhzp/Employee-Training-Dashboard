@@ -13,7 +13,6 @@ import { AppBarChart } from "@/components/AppBarChart";
 import { AppAreaChart } from "@/components/AppAreaChart";
 import { Progress } from "@/components/ui/progress"
 
-// Small helper components to keep the page readable
 const MetricCard = ({
   title,
   Icon,
@@ -88,7 +87,7 @@ export default function Home() {
 
         {/* Overview */}
         <TabsContent value="Overview">
-          {/* Overview: Top metrics */}
+          {/* Top metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard title="Total Revenue" Icon={DollarSign} value="$45,231.89" description="+20.1% from last month" />
             <MetricCard title="Subscriptions" Icon={Users} value="+2350" description="+180.1% from last month" />
@@ -123,50 +122,14 @@ export default function Home() {
           <div className="space-y-4">
             <AppAreaChart/>
             
+            {/* Bottom metrics */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Total Clicks</CardTitle>
-                  <CardAction><ChartLine /></CardAction>
-                </CardHeader>
-                <CardContent>
-                  <p>1,248</p>
-                  <CardDescription>+12.4% vs last week</CardDescription>
-                </CardContent>
-              </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Unique Visitors</CardTitle>
-                <CardAction><User /></CardAction>
-              </CardHeader>
-              <CardContent>
-                <p>832</p>
-                <CardDescription>+5.8% vs last week</CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Bounce Rate</CardTitle>
-                <CardAction><Activity /></CardAction>
-              </CardHeader>
-              <CardContent>
-                <p>42%</p>
-                <CardDescription>-3.2% vs last week</CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Avg. Session</CardTitle>
-                <CardAction><Clock /></CardAction>
-              </CardHeader>
-              <CardContent>
-                <p>3m 24s</p>
-                <CardDescription>+18s vs last week</CardDescription>
-              </CardContent>
-            </Card>
-          </div>
+              <MetricCard title="Total Clicks" Icon={ChartLine} value="1,248" description="+12.4% vs last week"/>
+              <MetricCard title="Unique Visitors" Icon={User} value="832" description="+5.8% vs last week"/>
+              <MetricCard title="Bounce Rate" Icon={Activity} value="42%" description="-3.2% vs last week"/>
+              <MetricCard title="Avg. Session" Icon={Clock} value="3m 24s" description="+18s vs last week"/>
+            </div>
 
-            {/* PROGRESS CARDS */}
             {/* PROGRESS CARDS */}
             <div className="grid grid-cols-1 lg:grid-cols-7 gap-4">
               <Card className="col-span-1 lg:col-span-4 gap-3">
