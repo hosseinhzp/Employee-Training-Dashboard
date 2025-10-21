@@ -32,15 +32,14 @@ import {
 import Link from 'next/link'
 import Image from 'next/image'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible'
-import { JSX } from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Avatar, AvatarImage } from './ui/avatar'
 
 type Item = { title: string; url: string; icon: any }
 
 const items: Item[] = [
-  { title: 'Dashboard', url: '#', icon: LayoutDashboard },
-  { title: 'Tasks', url: '#', icon: ListTodo },
+  { title: 'Dashboard', url: '/', icon: LayoutDashboard },
+  { title: 'Tasks', url: '/tasks', icon: ListTodo },
   { title: 'Apps', url: '#', icon: AppWindowIcon },
   { title: 'Chats', url: '#', icon: MessageSquare },
   { title: 'Users', url: '#', icon: Users },
@@ -173,7 +172,7 @@ const AppSideBar = () => {
         </SidebarGroup>
 
   {/* Group: Other */}
-  <SidebarGroup>
+        <SidebarGroup>
           <SidebarGroupLabel>Other</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
