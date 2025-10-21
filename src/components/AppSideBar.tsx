@@ -1,15 +1,18 @@
 import {
   AppWindowIcon,
+  BellRing,
   Bug,
   ChevronRight,
   CircleParking,
+  CreditCard,
   HelpCircle,
   LayoutDashboard,
   ListTodo,
+  LogOut,
   MessageSquare,
   ShieldCheck,
-  User2,
   Users,
+  VerifiedIcon,
 } from 'lucide-react'
 import {
   Sidebar,
@@ -25,13 +28,13 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarSeparator,
 } from './ui/sidebar'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible'
 import { JSX } from 'react'
-import { DropdownMenu, DropdownMenuTrigger } from './ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu'
+import { Avatar, AvatarImage } from './ui/avatar'
 
 type Item = { title: string; url: string; icon: any }
 
@@ -45,8 +48,22 @@ const items: Item[] = [
 ]
 
 const AppSideBar = () => {
+  // ProfileBlock: reusable avatar + name + email used in trigger and menu label
+  const ProfileBlock = ({ compact }: { compact?: boolean }) => (
+    <div className={compact ? 'flex items-center gap-3' : 'flex items-center gap-4'}>
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" />
+      </Avatar>
+      <div className={compact ? 'flex flex-col' : 'flex flex-col flex-1'}>
+        <span className="text-sm font-semibold">HosseinHzp</span>
+        <span className="text-xs text-muted-foreground">HosseinHzp@gmail.com</span>
+      </div>
+    </div>
+  )
+
   return (
     <Sidebar collapsible="icon">
+      {/* Sidebar: Header */}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -60,9 +77,9 @@ const AppSideBar = () => {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarSeparator />
-
+      {/* Sidebar: Content */}
       <SidebarContent>
+        {/* Group: General */}
         <SidebarGroup>
           <SidebarGroupLabel>General</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -81,7 +98,8 @@ const AppSideBar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
+  {/* Group: Pages */}
+  <SidebarGroup>
           <SidebarGroupLabel>Pages</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -154,7 +172,8 @@ const AppSideBar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <SidebarGroup>
+  {/* Group: Other */}
+  <SidebarGroup>
           <SidebarGroupLabel>Other</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -208,6 +227,41 @@ const AppSideBar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+  {/* Sidebar: Footer */}
+  <SidebarFooter>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+              <div className='m-2 cursor-pointer' role="button" tabIndex={0}>
+                <ProfileBlock />
+              </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent sideOffset={0} align="start" className="w-64">
+            <DropdownMenuLabel>
+              <ProfileBlock compact />
+            </DropdownMenuLabel>
+              
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <VerifiedIcon/>
+              <span>Account</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <CreditCard/>
+              <span>Bailing</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <BellRing/>
+              <span>Notifications</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator/>
+            <DropdownMenuItem variant='destructive'>
+              <LogOut/>
+              <span>Sign Out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
