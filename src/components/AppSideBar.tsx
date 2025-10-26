@@ -35,15 +35,15 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collap
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Avatar, AvatarImage } from './ui/avatar'
 
-type Item = { title: string; url: string; icon: any }
+type Item = { title: string; url: string; icon: React.ElementType }
 
 const items: Item[] = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Tasks', url: '/tasks', icon: ListTodo },
-  { title: 'Apps', url: '#', icon: AppWindowIcon },
-  { title: 'Chats', url: '#', icon: MessageSquare },
-  { title: 'Users', url: '#', icon: Users },
-  { title: 'Secured by Clerk', url: '#', icon: CircleParking },
+  { title: 'Apps', url: '/apps', icon: AppWindowIcon },
+  { title: 'Chats', url: '/chats', icon: MessageSquare },
+  { title: 'Users', url: '/users', icon: Users },
+  { title: 'Secured by Clerk', url: '/secured', icon: CircleParking },
 ]
 
 const AppSideBar = () => {
@@ -85,7 +85,7 @@ const AppSideBar = () => {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild tooltip={item.title}>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -104,7 +104,7 @@ const AppSideBar = () => {
             <SidebarMenu>
               <Collapsible className="group/collapsible">
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton>
+                  <SidebarMenuButton tooltip="Auth">
                     <ShieldCheck />
                     <span>Auth</span>
                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
@@ -143,7 +143,7 @@ const AppSideBar = () => {
             <SidebarMenu>
               <Collapsible className="group/collapsible">
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton>
+                  <SidebarMenuButton tooltip="Errors">
                     <Bug />
                     <span>Errors</span>
                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
@@ -178,7 +178,7 @@ const AppSideBar = () => {
             <SidebarMenu>
               <Collapsible className="group/collapsible">
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton>
+                  <SidebarMenuButton tooltip="Settings">
                     <ShieldCheck />
                     <span>Settings</span>
                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
@@ -216,7 +216,7 @@ const AppSideBar = () => {
             
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton>
+                <SidebarMenuButton tooltip="Help Center">
                   <HelpCircle />
                   <span>Help Center</span>
                 </SidebarMenuButton>

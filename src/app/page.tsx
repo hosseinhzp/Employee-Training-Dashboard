@@ -20,7 +20,7 @@ const MetricCard = ({
   description,
 }: {
   title: string
-  Icon?: any
+  Icon?: React.ElementType
   value: React.ReactNode
   description?: string
 }) => (
@@ -73,7 +73,8 @@ const ProgressRow = ({ label, value, right }: { label: string; value: number; ri
 
 export default function Home() {
   return (
-    <div className="space-y-4 mt-4">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="space-y-4 mt-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -193,6 +194,7 @@ export default function Home() {
           </div>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   )
 }
