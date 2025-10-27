@@ -40,7 +40,7 @@ type Item = { title: string; url: string; icon: React.ElementType }
 const items: Item[] = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Tasks', url: '/tasks', icon: ListTodo },
-  { title: 'Apps', url: '/apps', icon: AppWindowIcon },
+  { title: 'Calendar', url: '/calendar', icon: AppWindowIcon },
   { title: 'Chats', url: '/chats', icon: MessageSquare },
   { title: 'Users', url: '/users', icon: Users },
   { title: 'Secured by Clerk', url: '/secured', icon: CircleParking },

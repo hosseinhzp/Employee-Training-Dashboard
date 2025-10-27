@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Activity, ChartLine, Clock, CreditCard, DollarSign, HeartPulse, User, Users } from "lucide-react";
+import { Activity, ArrowRight, ChartLine, Clock, CreditCard, DollarSign, Ellipsis, HeartPulse, User, Users } from "lucide-react";
 import { AppBarChart } from "@/components/AppBarChart";
 import { AppAreaChart } from "@/components/AppAreaChart";
 import { Progress } from "@/components/ui/progress"
+import { AppPieChart } from "@/components/AppPieChart";
 
 const MetricCard = ({
   title,
@@ -114,7 +115,110 @@ export default function Home() {
                 />
               ))}
             </Card>
+          </div>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Top Channels</CardTitle>
+                  <CardAction><Ellipsis /></CardAction>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between">
+                    <CardDescription>Source</CardDescription>
+                    <CardDescription>Visitors</CardDescription>
+                  </div>
+                </CardContent>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="flex justify-between font-light">
+                      <span>Google</span>
+                      <span>5.2K</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>Facebook</span>
+                      <span>3.1K</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>Twitter</span>
+                      <span>1.4K</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>LinkedIn</span>
+                      <span>984</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>LinkedIn</span>
+                      <span>984</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>LinkedIn</span>
+                      <span>984</span>
+                    </div>
+                    <div className="flex justify-center mt-7">
+                      <Button>
+                        <span>Channels Reports</span>
+                        <ArrowRight className="ml-2"/>
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Top Pages</CardTitle>
+                  <CardAction><Ellipsis /></CardAction>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between">
+                    <CardDescription>Source</CardDescription>
+                    <CardDescription>Pageview</CardDescription>
+                  </div>
+                </CardContent>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="flex justify-between font-light">
+                      <span>tailadmin.com</span>
+                      <span>5.2K</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>preview.tailadmin.com</span>
+                      <span>3.1K</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>docs.tailadmin.com</span>
+                      <span>1.4K</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>tailadmin.com/components</span>
+                      <span>984</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>tailadmin.com/components</span>
+                      <span>984</span>
+                    </div>
+                    <div className="flex justify-between font-light mt-4">
+                      <span>tailadmin.com/components</span>
+                      <span>984</span>
+                    </div>
+                    <div className="flex justify-center mt-7">
+                      <Button>
+                        <span>Channels Reports</span>
+                        <ArrowRight className="ml-2"/>
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+              <div className="sm:col-span-2 lg:col-span-1">
+                <AppPieChart />
+              </div>
           </div>
         </TabsContent>
 
