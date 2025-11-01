@@ -118,7 +118,7 @@ const AppSideBar = () => {
                         <SidebarMenuSub>
                           <SidebarMenuSubItem>
                             <SidebarMenuSubButton asChild>
-                              <Link href="/">Sign In</Link>
+                              <Link href="/login">Sign In</Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         </SidebarMenuSub>
@@ -129,7 +129,18 @@ const AppSideBar = () => {
                         <SidebarMenuSub>
                           <SidebarMenuSubItem>
                             <SidebarMenuSubButton asChild>
-                              <Link href="/">Sign Out</Link>
+                              <Link href="/register">Sign Up</Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        </SidebarMenuSub>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton>
+                        <SidebarMenuSub>
+                          <SidebarMenuSubItem>
+                            <SidebarMenuSubButton asChild>
+                              <Link href="/password">Reset Password</Link>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
                         </SidebarMenuSub>
