@@ -68,6 +68,7 @@ const PaginationComponent: React.FC<Props> = ({ table }) => {
           <PaginationPrevious
             onClick={(e) => {
               e.preventDefault()
+              if (!table.getCanPreviousPage()) return
               prev()
             }}
             aria-disabled={!table.getCanPreviousPage()}
@@ -97,6 +98,7 @@ const PaginationComponent: React.FC<Props> = ({ table }) => {
           <PaginationNext
             onClick={(e) => {
               e.preventDefault()
+              if (!table.getCanNextPage()) return
               next()
             }}
             aria-disabled={!table.getCanNextPage()}
