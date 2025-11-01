@@ -11,6 +11,7 @@ import {
   LogOut,
   MessageSquare,
   ShieldCheck,
+  User2,
   Users,
   VerifiedIcon,
 } from 'lucide-react'
@@ -146,22 +147,6 @@ const AppSideBar = () => {
                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
-
-                <CollapsibleContent>
-                  <SidebarMenu>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton>
-                        <SidebarMenuSub>
-                          <SidebarMenuSubItem>
-                            <SidebarMenuSubButton asChild>
-                              <Link href="/">Not Found</Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        </SidebarMenuSub>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </CollapsibleContent>
               </Collapsible>
             </SidebarMenu>
 
@@ -173,50 +158,10 @@ const AppSideBar = () => {
           <SidebarGroupLabel>Other</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              <Collapsible className="group/collapsible">
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="Settings">
-                    <ShieldCheck />
-                    <span>Settings</span>
-                    <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-
-                <CollapsibleContent>
-                  <SidebarMenu>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton>
-                        <SidebarMenuSub>
-                          <SidebarMenuSubItem>
-                            <SidebarMenuSubButton asChild>
-                              <Link href="/">Profile</Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        </SidebarMenuSub>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton>
-                        <SidebarMenuSub>
-                          <SidebarMenuSubItem>
-                            <SidebarMenuSubButton asChild>
-                              <Link href="/">Account</Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        </SidebarMenuSub>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  </SidebarMenu>
-                </CollapsibleContent>
-              </Collapsible>
-            </SidebarMenu>
-            
-            <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Help Center">
-                  <HelpCircle />
-                  <span>Help Center</span>
-                </SidebarMenuButton>
+                <SidebarMenuSubButton asChild>
+                  <Link href="/profile"><User2 />User Profile</Link>
+                </SidebarMenuSubButton>
               </SidebarMenuItem>
             </SidebarMenu>
 
