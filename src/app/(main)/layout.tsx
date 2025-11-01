@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/NavBar";
 import AppSideBar from "@/components/AppSideBar";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { cookies } from "next/headers";
 
@@ -31,25 +30,14 @@ export default async function MainLayout({
   const _defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider>
-            <AppSideBar />
-            <main className="w-full min-h-screen flex flex-col">
-              <NavBar />
-              <div className="px-4 pb-8">{children}</div>
-            </main>
-          </SidebarProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <div className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
+      <SidebarProvider>
+        <AppSideBar />
+        <main className="w-full min-h-screen flex flex-col">
+          <NavBar />
+          <div className="px-4 pb-8">{children}</div>
+        </main>
+      </SidebarProvider>
+    </div>
   );
 }
