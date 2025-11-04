@@ -17,26 +17,26 @@ import {
 } from "@/components/ui/chart"
 export const description = "A multiple bar chart"
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-  { month: "July", desktop: 186, mobile: 80 },
-  { month: "August", desktop: 305, mobile: 200 },
-  { month: "September", desktop: 237, mobile: 120 },
-  { month: "October", desktop: 73, mobile: 190 },
-  { month: "November", desktop: 209, mobile: 130 },
-  { month: "December", desktop: 214, mobile: 140 }
+  { month: "January", CoursesCompleted: 186, CoursesStarted: 80 },
+  { month: "February", CoursesCompleted: 305, CoursesStarted: 200 },
+  { month: "March", CoursesCompleted: 237, CoursesStarted: 120 },
+  { month: "April", CoursesCompleted: 73, CoursesStarted: 190 },
+  { month: "May", CoursesCompleted: 209, CoursesStarted: 130 },
+  { month: "June", CoursesCompleted: 214, CoursesStarted: 140 },
+  { month: "July", CoursesCompleted: 186, CoursesStarted: 80 },
+  { month: "August", CoursesCompleted: 305, CoursesStarted: 200 },
+  { month: "September", CoursesCompleted: 237, CoursesStarted: 120 },
+  { month: "October", CoursesCompleted: 73, CoursesStarted: 190 },
+  { month: "November", CoursesCompleted: 209, CoursesStarted: 130 },
+  { month: "December", CoursesCompleted: 214, CoursesStarted: 140 }
 ]
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  CoursesCompleted: {
+    label: "Courses Completed",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  CoursesStarted: {
+    label: "Courses Started",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig
@@ -44,7 +44,7 @@ export function AppBarChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Overview</CardTitle>
+        <CardTitle>Training Overview</CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -57,12 +57,18 @@ export function AppBarChart() {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
+            <YAxis
+              dataKey="CoursesCompleted"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar dataKey="CoursesCompleted" fill="var(--color-cs)" radius={4} />
+            <Bar dataKey="CoursesStarted" fill="var(--color-cc)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

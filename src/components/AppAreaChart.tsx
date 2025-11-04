@@ -18,25 +18,25 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "An area chart with axes"
+export const description = "Smooth area chart for employee training analytics"
 
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", newEmployees: 120, experienced: 200 },
+  { month: "February", newEmployees: 160, experienced: 210 },
+  { month: "March", newEmployees: 190, experienced: 230 },
+  { month: "April", newEmployees: 175, experienced: 260 },
+  { month: "May", newEmployees: 220, experienced: 280 },
+  { month: "June", newEmployees: 240, experienced: 300 },
 ]
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
+  newEmployees: {
+    label: "New Employees",
+    color: "var(--chart-3)",
   },
-  mobile: {
-    label: "Mobile",
-    color: "var(--chart-2)",
+  experienced: {
+    label: "Experienced Employees",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
@@ -44,9 +44,9 @@ export function AppAreaChart() {
   return (
     <Card className="h-120 overflow-hidden">
       <CardHeader>
-        <CardTitle>Area Chart - Axes</CardTitle>
+        <CardTitle>Employee Training Progress</CardTitle>
         <CardDescription>
-          Showing total visitors for the last 6 months
+          Training hours comparison (Jan – Jun 2025)
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
@@ -55,11 +55,13 @@ export function AppAreaChart() {
             accessibilityLayer
             data={chartData}
             margin={{
-              left: -20,
+              top: 10,
+              left: -10,
               right: 12,
+              bottom: 0,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" />
             <XAxis
               dataKey="month"
               tickLine={false}
@@ -71,23 +73,33 @@ export function AppAreaChart() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickCount={3}
+              tickCount={4}
+              label={{
+                value: "Training Hours",
+                angle: -90,
+                position: "insideLeft",
+                offset: 0,
+                style: { textAnchor: "middle", fill: "#888", fontSize: 12 },
+              }}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+
             <Area
-              dataKey="mobile"
-              type="natural"
-              fill="var(--color-mobile)"
+              dataKey="newEmployees"
+              type="monotone"
+              fill="var(--color-newEmployees)"
               fillOpacity={0.4}
-              stroke="var(--color-mobile)"
+              stroke="var(--color-newEmployees)"
+              strokeWidth={2}
               stackId="a"
             />
             <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
+              dataKey="experienced"
+              type="monotone"
+              fill="var(--color-experienced)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-experienced)"
+              strokeWidth={2}
               stackId="a"
             />
           </AreaChart>
@@ -97,10 +109,7 @@ export function AppAreaChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-            </div>
-            <div className="text-muted-foreground flex items-center gap-2 leading-none">
-              January - June 2024
+              Training hours increased by 12.5% <TrendingUp className="h-4 w-4" />
             </div>
           </div>
         </div>

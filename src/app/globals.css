@@ -68,8 +68,8 @@
   --chart-3: #b4debd;
   --chart-4: #fff7dd;
   --chart-5: #2f5562; 
-  --color-desktop: var(--chart-1);
-  --color-mobile: var(--chart-2);
+  --color-cs: var(--chart-1);
+  --color-cc: var(--chart-2);
   --color-chrome: var(--chart-1);
   --color-safari: var(--chart-2);
   --color-firefox: var(--chart-3);
@@ -109,8 +109,8 @@
   --chart-3: #b4debd;
   --chart-4: #fff7dd;
   --chart-5: #2f5562;
-  --color-desktop: var(--chart-1);
-  --color-mobile: var(--chart-2);
+  --color-cs: var(--chart-1);
+  --color-cc: var(--chart-2);
   --color-chrome: var(--chart-1);
   --color-safari: var(--chart-2);
   --color-firefox: var(--chart-3);

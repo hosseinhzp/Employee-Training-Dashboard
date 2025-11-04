@@ -8,11 +8,13 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Activity, ArrowRight, ChartLine, Clock, CreditCard, DollarSign, Ellipsis, HeartPulse, User, Users } from "lucide-react";
+import { Activity, ArrowRight, BarChart3, BookOpen, BookOpenText, ChartLine, Clock, Clock3, CreditCard, DollarSign, Ellipsis, GraduationCap, HeartPulse, User, User2, Users } from "lucide-react";
 import { AppBarChart } from "@/components/AppBarChart";
 import { AppAreaChart } from "@/components/AppAreaChart";
 import { Progress } from "@/components/ui/progress"
 import { AppPieChart } from "@/components/AppPieChart";
+import { AppRadarChart } from "@/components/AppRadarChart";
+import { AppCalendar } from "@/components/AppCalendar";
 
 const MetricCard = ({
   title,
@@ -37,7 +39,7 @@ const MetricCard = ({
   </Card>
 )
 
-const RecentSaleItem = ({
+const RecentTrainingItem = ({
   name,
   email,
   amount,
@@ -90,76 +92,93 @@ export default function Home() {
         <TabsContent value="Overview">
           {/* Top metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <MetricCard title="Total Revenue" Icon={DollarSign} value="$45,231.89" description="+20.1% from last month" />
-            <MetricCard title="Subscriptions" Icon={Users} value="+2350" description="+180.1% from last month" />
-            <MetricCard title="Sales" Icon={CreditCard} value="+12,234" description="+19% from last month" />
-            <MetricCard title="Active Now" Icon={HeartPulse} value="+573" description="+201 since last hour" />
+            <MetricCard title="Employees" Icon={Users} value="637" description="+53 from last month" />
+            <MetricCard title="Trainers" Icon={GraduationCap} value="412" description="+21 from last month" />
+            <MetricCard title="Active Courses" Icon={BookOpenText} value="40" description="+12% from last month" />
+            <MetricCard title="Training Hours Logged" Icon={Clock3} value="32K" description="+201 since last hour" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
 
             <AppBarChart/>
+            <AppRadarChart/>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             <Card>
               <CardHeader>
-                <CardTitle>Recent Sales</CardTitle>
-                <CardDescription>You made 265 sales this month.</CardDescription>
+                <CardTitle>Calendar</CardTitle>
+                <CardDescription>Check your events and tasks</CardDescription>
               </CardHeader>
-              {/* Recent sales list */}
-              {Array.from({ length: 5 }).map((_, i) => (
-                <RecentSaleItem
-                  key={i}
-                  name="Olivia Martin"
-                  email="olivia.martin@email.com"
-                  amount="+$1,999.00"
-                />
+              <CardContent>
+                <AppCalendar />
+              </CardContent>
+            </Card>
+            <Card className="sm:col-span-2 lg:col-span-2">
+              <CardHeader>
+                <CardTitle>Recent Course Completions</CardTitle>
+                <CardDescription>
+                  265 courses completed this month.
+                </CardDescription>
+              </CardHeader>
+              {/* Recent completions list */}
+              {[
+                { name: "Emma Lopez", email: "emma.lopez@company.com", amount: "Leadership Basics" },
+                { name: "James Lee", email: "james.lee@company.com", amount: "Time Management" },
+                { name: "Sophia Brown", email: "sophia.brown@company.com", amount: "Advanced Excel" },
+                { name: "Liam Johnson", email: "liam.johnson@company.com", amount: "Project Communication" },
+                { name: "Emma Davis", email: "emma.davis@company.com", amount: "Customer Service Skills" },
+              ].map((item, i) => (
+                <RecentTrainingItem key={i} {...item} />
               ))}
             </Card>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-
             <div>
               <Card>
                 <CardHeader>
-                  <CardTitle>Top Channels</CardTitle>
+                  <CardTitle>Top Training Departments</CardTitle>
                   <CardAction><Ellipsis /></CardAction>
                 </CardHeader>
                 <CardContent>
                   <div className="flex justify-between">
-                    <CardDescription>Source</CardDescription>
-                    <CardDescription>Visitors</CardDescription>
+                    <CardDescription>Department</CardDescription>
+                    <CardDescription>Hours Trained</CardDescription>
                   </div>
                 </CardContent>
+
                 <CardContent>
                   <div className="space-y-2">
                     <div className="flex justify-between font-light">
-                      <span>Google</span>
+                      <span>Engineering</span>
                       <span>5.2K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>Facebook</span>
-                      <span>3.1K</span>
+                      <span>Sales</span>
+                      <span>3.8K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>Twitter</span>
-                      <span>1.4K</span>
+                      <span>Human Resources</span>
+                      <span>2.6K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>LinkedIn</span>
-                      <span>984</span>
+                      <span>Customer Support</span>
+                      <span>1.9K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>LinkedIn</span>
-                      <span>984</span>
+                      <span>Marketing</span>
+                      <span>1.3K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>LinkedIn</span>
-                      <span>984</span>
+                      <span>Operations</span>
+                      <span>982</span>
                     </div>
+
                     <div className="flex justify-center mt-7">
                       <Button>
-                        <span>Channels Reports</span>
-                        <ArrowRight className="ml-2"/>
+                        <span>Department Reports</span>
+                        <ArrowRight className="ml-2" />
                       </Button>
                     </div>
                   </div>
@@ -167,54 +186,59 @@ export default function Home() {
               </Card>
             </div>
 
+
             <div>
               <Card>
                 <CardHeader>
-                  <CardTitle>Top Pages</CardTitle>
+                  <CardTitle>Top Training Courses</CardTitle>
                   <CardAction><Ellipsis /></CardAction>
                 </CardHeader>
+
                 <CardContent>
                   <div className="flex justify-between">
-                    <CardDescription>Source</CardDescription>
-                    <CardDescription>Pageview</CardDescription>
+                    <CardDescription>Course</CardDescription>
+                    <CardDescription>Enrollments</CardDescription>
                   </div>
                 </CardContent>
+
                 <CardContent>
                   <div className="space-y-2">
                     <div className="flex justify-between font-light">
-                      <span>tailadmin.com</span>
+                      <span>Leadership Fundamentals</span>
                       <span>5.2K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>preview.tailadmin.com</span>
-                      <span>3.1K</span>
+                      <span>Effective Communication</span>
+                      <span>3.8K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>docs.tailadmin.com</span>
-                      <span>1.4K</span>
+                      <span>Time Management Mastery</span>
+                      <span>2.9K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>tailadmin.com/components</span>
-                      <span>984</span>
+                      <span>Technical Onboarding</span>
+                      <span>1.7K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>tailadmin.com/components</span>
-                      <span>984</span>
+                      <span>Workplace Safety</span>
+                      <span>1.3K</span>
                     </div>
                     <div className="flex justify-between font-light mt-4">
-                      <span>tailadmin.com/components</span>
-                      <span>984</span>
+                      <span>Advanced Problem Solving</span>
+                      <span>980</span>
                     </div>
+
                     <div className="flex justify-center mt-7">
                       <Button>
-                        <span>Channels Reports</span>
-                        <ArrowRight className="ml-2"/>
+                        <span>Course Reports</span>
+                        <ArrowRight className="ml-2" />
                       </Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             </div>
+            
               <div className="sm:col-span-2 lg:col-span-1">
                 <AppPieChart />
               </div>
@@ -230,69 +254,78 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Total Clicks</CardTitle>
-                  <CardAction><ChartLine /></CardAction>
+                  <CardTitle>Total Training Hours</CardTitle>
+                  <CardAction><Clock /></CardAction>
                 </CardHeader>
                 <CardContent>
-                  <p>1,248</p>
-                  <CardDescription>+12.4% vs last week</CardDescription>
+                  <p>12,480</p>
+                  <CardDescription>+8.2% vs last month</CardDescription>
                 </CardContent>
               </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Unique Visitors</CardTitle>
-                <CardAction><User /></CardAction>
-              </CardHeader>
-              <CardContent>
-                <p>832</p>
-                <CardDescription>+5.8% vs last week</CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Bounce Rate</CardTitle>
-                <CardAction><Activity /></CardAction>
-              </CardHeader>
-              <CardContent>
-                <p>42%</p>
-                <CardDescription>-3.2% vs last week</CardDescription>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Avg. Session</CardTitle>
-                <CardAction><Clock /></CardAction>
-              </CardHeader>
-              <CardContent>
-                <p>3m 24s</p>
-                <CardDescription>+18s vs last week</CardDescription>
-              </CardContent>
-            </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Active Learners</CardTitle>
+                  <CardAction><Users /></CardAction>
+                </CardHeader>
+                <CardContent>
+                  <p>313</p>
+                  <CardDescription>+5.8% vs last month</CardDescription>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Courses Completed</CardTitle>
+                  <CardAction><BookOpen /></CardAction>
+                </CardHeader>
+                <CardContent>
+                  <p>752</p>
+                  <CardDescription>+12.1% vs last month</CardDescription>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Avg. Assessment Score</CardTitle>
+                  <CardAction><BarChart3 /></CardAction>
+                </CardHeader>
+                <CardContent>
+                  <p>87%</p>
+                  <CardDescription>+3.4% vs last month</CardDescription>
+                </CardContent>
+              </Card>
             </div>
+
 
             {/* PROGRESS CARDS */}
             <div className="grid grid-cols-1 lg:grid-cols-7 gap-4">
+              {/* Left Card */}
               <Card className="col-span-1 lg:col-span-4 gap-3">
                 <CardHeader>
-                  <CardTitle>Referrers</CardTitle>
-                  <CardDescription className="-mt-2 text-sm text-gray-400">Top sources driving traffic</CardDescription>
+                  <CardTitle>Department Training Progress</CardTitle>
+                  <CardDescription className="-mt-2 text-sm text-gray-400">
+                    Percentage of employees completing their assigned courses
+                  </CardDescription>
                 </CardHeader>
-                <ProgressRow label="Direct" value={100} right={"512"} />
-                <ProgressRow label="Product Hunt" value={45} right={"238"} />
-                <ProgressRow label="Twitter" value={33} right={"174"} />
-                <ProgressRow label="Blog" value={22} right={"104"} />
+                <ProgressRow label="Engineering" value={82} right={"82"} />
+                <ProgressRow label="Sales" value={100} right={"238"} />
+                <ProgressRow label="Human Resources" value={64} right={"64"} />
+                <ProgressRow label="Marketing" value={52} right={"52"} />
               </Card>
 
+              {/* Right Card */}
               <Card className="col-span-1 lg:col-span-3 gap-3">
                 <CardHeader>
-                  <CardTitle>Devices</CardTitle>
-                  <CardDescription className="-mt-2 text-sm text-gray-400">How users access your app</CardDescription>
+                  <CardTitle>Learning Methods</CardTitle>
+                  <CardDescription className="-mt-2 text-sm text-gray-400">
+                    How employees engage with training materials
+                  </CardDescription>
                 </CardHeader>
-                <ProgressRow label="Desktop" value={100} right={"74%"} />
-                <ProgressRow label="Mobile" value={30} right={"22%"} />
-                <ProgressRow label="Tablet" value={12} right={"4%"} />
+                <ProgressRow label="Online Modules" value={74} right={"74%"} />
+                <ProgressRow label="Workshops" value={22} right={"22%"} />
+                <ProgressRow label="1-on-1 Coaching" value={4} right={"4%"} />
               </Card>
-
             </div>
           </div>
         </TabsContent>

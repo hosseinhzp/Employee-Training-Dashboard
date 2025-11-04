@@ -86,7 +86,7 @@ const ProfilePage = () => {
           </div>
           <div>
             <p className='mb-2 text-xs leading-normal text-gray-500 dark:text-gray-400'>Bio</p>
-            <p className='text-sm font-medium text-gray-800 dark:text-white/90'>Product Designer</p>
+            <p className='text-sm font-medium text-gray-800 dark:text-white/90'>Leadership Basics</p>
           </div>
         </div>
         <div className='mt-4 flex justify-center xl:justify-end'>

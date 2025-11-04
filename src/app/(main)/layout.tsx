@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AceDesign | Admin Dashboard",
-  description: "Admin dashboard built with Next.js",
+  title: "AceDesign | Employee Training Dashboard",
+  description: "Employee training dashboard built with Next.js",
 };
 
 export default async function MainLayout({
