@@ -48,7 +48,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { SortDesc, RefreshCw, CheckCircle, XCircle, ArrowUp, ArrowDown, Minus, CircleOff, Circle } from "lucide-react"
+import { SortDesc, RefreshCw, CheckCircle, AlertCircle, Clock, XCircle, ArrowUp, ArrowDown, Minus } from "lucide-react"
 import PaginationComponent from "./pagination"
 import SelectionToolbar from "@/components/ui/selection-toolbar"
 
@@ -62,11 +62,9 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [statusFilter, setStatusFilter] = React.useState<string[]>(() => [])
-  const [priorityFilter, setPriorityFilter] = React.useState<string[]>(() => [])
 
-    /* UI filter state (multi-select)
-       - statusFilter: selected status values (e.g. ["In Progress", "Done"])
-       - priorityFilter: selected priority values (e.g. ["High"]) */
+   /* UI filter state (multi-select)
+     - statusFilter: selected status values (e.g. ["In Progress", "Completed"]) */
   const toggle = (arr: string[], val: string) => {
     if (arr.includes(val)) return arr.filter((v) => v !== val)
     return [...arr, val]
@@ -80,35 +78,21 @@ export function DataTable<TData, TValue>({
     }
   }
 
-  // map status -> icon component
+  // map status -> icon component (training statuses) — align with columns.tsx
   const statusIcon = (s: string) => {
     switch (s) {
       case "In Progress":
         return <RefreshCw className="w-4 h-4 text-gray-400" />
-      case "Done":
+      case "Completed":
         return <CheckCircle className="w-4 h-4 text-gray-400" />
-      case "Failed":
-        return <XCircle className="w-4 h-4 text-gray-400" />
+      case "Overdue":
+        return <AlertCircle className="w-4 h-4 text-gray-400" />
       case "Cancelled":
-        return <CircleOff className="w-4 h-4 text-gray-400" />
-      case "Todo":
-        return <Circle className="w-4 h-4 text-gray-400" />
-      default:
-        return null
-    }
-  }
-
-  // map priority -> icon component
-  const priorityIcon = (p: string) => {
-    switch (p) {
-      case "High":
-        return <ArrowUp className="w-4 h-4 text-gray-400" />
-      case "Medium":
+        return <XCircle className="w-4 h-4 text-gray-400" />
+      case "Assigned":
         return <Minus className="w-4 h-4 text-gray-400" />
-      case "Low":
-        return <ArrowDown className="w-4 h-4 text-gray-400" />
       default:
-        return null
+        return <Clock className="w-4 h-4 text-gray-400" />
     }
   }
   const [sorting, setSorting] = React.useState<SortingState>([])
@@ -148,19 +132,12 @@ export function DataTable<TData, TValue>({
     setRowSelection({})
   }
 
-  const handleUpdatePriority = (priority: "Low" | "Medium" | "High") => {
-    if (!selectedCount) return
-    // Placeholder: wire to backend or state update
-    console.log("Update priority to", priority, "for:", Object.keys(rowSelection))
-    setRowSelection({})
-  }
-
   const handleUpdateStatus = (
-    status: "In Progress" | "Done" | "Failed" | "Cancelled" | "Todo"
+    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled"
   ) => {
     if (!selectedCount) return
     // Placeholder: wire to backend or state update
-    console.log("Update status to", status, "for:", Object.keys(rowSelection))
+    console.log("Update training status to", status, "for:", Object.keys(rowSelection))
     setRowSelection({})
   }
 
@@ -169,13 +146,15 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center py-4">
-        {/* Search input: filters tasks by title (updates table column filter) */}
+        {/* Search input: filters courses or assignee (updates table column filter) */}
         <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
+          placeholder="Filter courses or assignee..."
+          value={(table.getColumn("course")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => {
+            // apply filter to course and assignee for better discoverability
+            table.getColumn("course")?.setFilterValue(event.target.value)
+            table.getColumn("assignee")?.setFilterValue(event.target.value)
+          }}
           className="max-w-sm"
         />
         {/* Status filter dropdown (multi-select) */}
@@ -187,11 +166,11 @@ export function DataTable<TData, TValue>({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             {[
+              "Assigned",
               "In Progress",
-              "Done",
-              "Failed",
+              "Completed",
+              "Overdue",
               "Cancelled",
-              "Todo",
             ].map((s) => (
               <DropdownMenuItem
                 key={s}
@@ -224,45 +203,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Priority filter dropdown (multi-select) */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-2">
-              Priority
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            {["Low", "Medium", "High"].map((p) => (
-              <DropdownMenuItem
-                key={p}
-                onClick={() => {
-                  const next = toggle(priorityFilter, p)
-                  setPriorityFilter(next)
-                  table.getColumn("priority")?.setFilterValue(next)
-                }}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-2">
-                    <Checkbox
-                      checked={priorityFilter.includes(p)}
-                      onClick={(e) => e.stopPropagation()}
-                      onCheckedChange={() => {
-                        const next = toggle(priorityFilter, p)
-                        setPriorityFilter(next)
-                        table.getColumn("priority")?.setFilterValue(next)
-                      }}
-                        aria-label={`Filter priority ${p}`}
-                        className="cursor-pointer"
-                    />
-                    {priorityIcon(p)}
-                    <span className="ml-1">{p}</span>
-                  </div>
-                  <span className="ml-4 text-sm text-muted-foreground">{getCount("priority", p)}</span>
-                </div>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* Priority not used for training assignments */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -343,7 +284,6 @@ export function DataTable<TData, TValue>({
         <SelectionToolbar
           selectedCount={selectedCount}
           onDelete={handleDelete}
-          onUpdatePriority={handleUpdatePriority}
           onUpdateStatus={handleUpdateStatus}
           onClose={handleCloseSelection}
         />

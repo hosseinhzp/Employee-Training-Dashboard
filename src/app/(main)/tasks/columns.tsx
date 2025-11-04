@@ -11,13 +11,16 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "./data-table-column-header"
-import { ArrowUp, ArrowDown, Clock, RefreshCw, CheckCircle, XCircle, Minus, CircleOff, Circle } from "lucide-react"
+import { Calendar, Clock, CheckCircle, XCircle, RefreshCw, AlertCircle, Minus } from "lucide-react"
 
 export type Data = {
-  task: string
-  title: string
-  status: "In Progress" | "Done" | "Failed" | "Cancelled" | "Todo"
-  priority: "Low" | "Medium" | "High"
+  id: string
+  course: string
+  assignee: string
+  dueDate: string // ISO date
+  status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled"
+  progress: number // 0-100
+  hours: number
 }
 
 export const columns: ColumnDef<Data>[] = [
@@ -48,21 +51,41 @@ export const columns: ColumnDef<Data>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "task",
-    header: "Task",
+    accessorKey: "id",
+    header: "ID",
   },
   {
-    accessorKey: "title",
+    accessorKey: "course",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="Course" />
     ),
+  },
+  {
+    accessorKey: "assignee",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Assignee" />
+    ),
+  },
+  {
+    accessorKey: "dueDate",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Due" />
+    ),
+    cell: ({ row }) => {
+      const date = row.getValue("dueDate") as string
+      return (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Calendar className="w-4 h-4" />
+          <span>{new Date(date).toLocaleDateString()}</span>
+        </div>
+      )
+    }
   },
   {
     accessorKey: "status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
-    )
-    ,
+    ),
     // support multi-select filtering: filterValue can be an array of allowed values
     filterFn: (row, columnId, filterValue: unknown) => {
       const rowValue = row.getValue(columnId) as string
@@ -71,7 +94,6 @@ export const columns: ColumnDef<Data>[] = [
         if (filterValue.length === 0) return true
         return filterValue.includes(rowValue)
       }
-      // fallback to equality
       return String(filterValue) === String(rowValue)
     },
     cell: ({ row }) => {
@@ -83,17 +105,17 @@ export const columns: ColumnDef<Data>[] = [
         case "In Progress":
           Icon = RefreshCw
           break
-        case "Done":
+        case "Completed":
           Icon = CheckCircle
           break
-        case "Failed":
+        case "Overdue":
+          Icon = AlertCircle
+          break
+        case "Cancelled":
           Icon = XCircle
           break
-          case "Cancelled":
-          Icon = CircleOff
-          break
-          case "Todo":
-          Icon = Circle
+        case "Assigned":
+          Icon = Minus
           break
       }
 
@@ -106,45 +128,20 @@ export const columns: ColumnDef<Data>[] = [
     }
   },
   {
-    accessorKey: "priority",
+    accessorKey: "progress",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
-    )
-    ,
-    // support multi-select filtering: filterValue can be an array of allowed values
-    filterFn: (row, columnId, filterValue: unknown) => {
-      const rowValue = row.getValue(columnId) as string
-      if (filterValue == null) return true
-      if (Array.isArray(filterValue)) {
-        if (filterValue.length === 0) return true
-        return filterValue.includes(rowValue)
-      }
-      // fallback to equality
-      return String(filterValue) === String(rowValue)
-    },
+      <DataTableColumnHeader column={column} title="Progress" />
+    ),
     cell: ({ row }) => {
-      const priority = row.getValue("priority") as Data['priority']
-
-      let Icon = Minus
-
-      switch (priority) {
-        case "High":
-          Icon = ArrowUp
-          break
-        case "Medium":
-          Icon = Minus
-          break
-        case "Low":
-          Icon = ArrowDown
-          break
-      }
-
-      return (
-        <div className="flex items-center gap-3">
-          <Icon className="w-4 h-4 text-gray-400" />
-          <span className="text-sm">{priority}</span>
-        </div>
-      )
+      const p = row.getValue("progress") as number
+      return <div className="text-sm">{p}%</div>
     }
+  },
+  {
+    accessorKey: "hours",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Hours" />
+    ),
+    cell: ({ row }) => <div className="text-sm">{row.getValue("hours")}h</div>
   },
 ]

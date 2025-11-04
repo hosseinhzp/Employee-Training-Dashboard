@@ -66,13 +66,13 @@ export function DataTable<TData, TValue>({
   // map status -> icon component
   const roleIcon = (r: string) => {
     switch (r) {
-      case "Cashier":
-        return <CreditCard className="w-4 h-4 text-gray-400" />
+      case "Employee":
+        return <Users className="w-4 h-4 text-gray-400" />
       case "Manager":
         return <Users className="w-4 h-4 text-gray-400" />
       case "Admin":
         return <UserCheck className="w-4 h-4 text-gray-400" />
-      case "SuperAdmin":
+      case "HR":
         return <Shield className="w-4 h-4 text-gray-400" />
       default:
         return null
@@ -110,14 +110,14 @@ export function DataTable<TData, TValue>({
 
   const handleDelete = () => {
     if (!selectedCount) return
-    if (!confirm(`Delete ${selectedCount} selected task(r)?`)) return
+    if (!confirm(`Delete ${selectedCount} selected user(s)?`)) return
     // Placeholder: wire to backend or state update
     console.log("Deleting rows:", Object.keys(rowSelection))
     setRowSelection({})
   }
 
   const handleUpdateRole = (
-    status: "Cashier" | "Manager" | "Admin" | "SuperAdmin"
+    status: "Employee" | "Manager" | "HR" | "Admin"
   ) => {
     if (!selectedCount) return
     // Placeholder: wire to backend or state update
@@ -130,7 +130,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center py-4">
-        {/* Search input: filters tasks by title (updates table column filter) */}
+        {/* Search input: filters users by name (updates table column filter) */}
         <Input
           placeholder="Filter Users..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -148,10 +148,10 @@ export function DataTable<TData, TValue>({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             {[
-              "Cashier",
+              "Employee",
               "Manager",
+              "HR",
               "Admin",
-              "SuperAdmin",
             ].map((r) => (
               <DropdownMenuItem
                 key={r}

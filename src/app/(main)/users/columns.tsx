@@ -4,13 +4,19 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { ArrowUp, ArrowDown, Clock, RefreshCw, CheckCircle, XCircle, Minus, CircleOff, Circle, CreditCard, UserCheck, Users, Shield } from "lucide-react"
+import { Progress } from "@/components/ui/progress"
 
 export type Data = {
   username: string
   name: string
   email: string
-  phone: string
-  role: "Cashier" | "Manager" | "Admin" | "SuperAdmin"
+  phone?: string
+  role: "Employee" | "Manager" | "HR" | "Admin"
+  department?: string
+  trainingProgress?: number // 0-100
+  completedTrainings?: number
+  lastTrainingDate?: string // ISO
+  certifications?: string[]
 }
 
 export const columns: ColumnDef<Data>[] = [
@@ -59,6 +65,27 @@ export const columns: ColumnDef<Data>[] = [
     header: "Phone Number",
   },
   {
+    accessorKey: "department",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Department" />
+    ),
+  },
+  {
+    accessorKey: "trainingProgress",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Training" />
+    ),
+    cell: ({ row }) => {
+      const p = (row.getValue("trainingProgress") as number) ?? 0
+      return (
+        <div className="w-36">
+          <Progress value={p} />
+          <div className="text-xs text-muted-foreground mt-1">{p}%</div>
+        </div>
+      )
+    }
+  },
+  {
     accessorKey: "role",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Role" />
@@ -81,8 +108,8 @@ export const columns: ColumnDef<Data>[] = [
       let Icon = Clock
 
       switch (role) {
-        case "Cashier":
-          Icon = CreditCard
+        case "Employee":
+          Icon = Users
           break
         case "Manager":
           Icon = Users
@@ -90,7 +117,7 @@ export const columns: ColumnDef<Data>[] = [
         case "Admin":
           Icon = UserCheck
           break
-          case "SuperAdmin":
+        case "HR":
           Icon = Shield
           break
       }

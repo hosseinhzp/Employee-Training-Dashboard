@@ -20,6 +20,9 @@ export default function UserForm() {
     email: "",
     phone: "",
     role: "",
+    department: "",
+    manager: "",
+    certifications: "",
   })
 
   const [errors, setErrors] = React.useState<Partial<Record<string, string>>>({})
@@ -42,6 +45,10 @@ export default function UserForm() {
     if (!values.email.trim()) next.email = "Email is required."
     if (!values.phone.trim()) next.phone = "Phone is required."
     if (!values.role || !values.role.trim()) next.role = "Role is required."
+    // newly added fields should be required as well
+    if (!values.department || !values.department.trim()) next.department = "Department is required."
+    if (!values.manager || !values.manager.trim()) next.manager = "Manager is required."
+    if (!values.certifications || !values.certifications.trim()) next.certifications = "Certifications are required."
     return next
   }
 
@@ -135,13 +142,59 @@ export default function UserForm() {
               <SelectValue placeholder="Select role..." />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Admin">Admin</SelectItem>
-              <SelectItem value="Manager">Manager</SelectItem>
-              <SelectItem value="Cashier">Cashier</SelectItem>
-              <SelectItem value="SuperAdmin">SuperAdmin</SelectItem>
+                <SelectItem value="Admin">Admin</SelectItem>
+                <SelectItem value="Manager">Manager</SelectItem>
+                <SelectItem value="Employee">Employee</SelectItem>
+                <SelectItem value="HR">HR</SelectItem>
             </SelectContent>
           </Select>
           <FieldError className="mt-1 text-sm text-destructive">{errors.role}</FieldError>
+        </FieldContent>
+      </Field>
+
+      <Field orientation="horizontal" className="gap-6">
+        <FieldLabel className="w-[110px]">Department</FieldLabel>
+        <FieldContent className="flex flex-col">
+          <Input
+            id="user-department"
+            name="department"
+            placeholder="e.g. Engineering"
+            className="w-full sm:w-[300px]"
+            value={values.department}
+            onChange={handleChange}
+            aria-invalid={!!errors.department}
+          />
+          <FieldError className="mt-1 text-sm text-destructive">{errors.department}</FieldError>
+        </FieldContent>
+      </Field>
+
+      <Field orientation="horizontal" className="gap-6">
+        <FieldLabel className="w-[110px]">Manager</FieldLabel>
+        <FieldContent className="flex flex-col">
+          <Input
+            id="user-manager"
+            name="manager"
+            placeholder="Manager name"
+            className="w-full sm:w-[300px]"
+            value={values.manager}
+            onChange={handleChange}
+          />
+          <FieldError className="mt-1 text-sm text-destructive">{errors.manager}</FieldError>
+        </FieldContent>
+      </Field>
+
+      <Field orientation="horizontal" className="gap-6">
+        <FieldLabel className="w-[110px]">Certifications</FieldLabel>
+        <FieldContent className="flex flex-col">
+          <Input
+            id="user-certifications"
+            name="certifications"
+            placeholder="Comma separated: ISO,Privacy..."
+            className="w-full sm:w-[300px]"
+            value={values.certifications}
+            onChange={handleChange}
+          />
+          <FieldError className="mt-1 text-sm text-destructive">{errors.certifications}</FieldError>
         </FieldContent>
       </Field>
 

@@ -16,9 +16,9 @@ interface SelectionToolbarProps {
   onDelete: () => void
   onUpdatePriority?: (priority: "Low" | "Medium" | "High") => void
   onUpdateStatus?: (
-    status: "In Progress" | "Done" | "Failed" | "Cancelled" | "Todo"
+    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled"
   ) => void
-  onUpdateRole?: (role: "Cashier" | "Manager" | "Admin" | "SuperAdmin") => void
+  onUpdateRole?: (role: "Employee" | "Manager" | "HR" | "Admin") => void
   onClose: () => void
 }
 
@@ -74,10 +74,10 @@ export default function SelectionToolbar({
                   </Button>
                 </DropdownMenuTrigger>
               </TooltipTrigger>
-              <TooltipContent sideOffset={4}>Update status</TooltipContent>
+              <TooltipContent sideOffset={4}>Update training status</TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
-              {( ["In Progress", "Done", "Failed", "Cancelled", "Todo"] as const ).map((s) => (
+              {( ["Assigned", "In Progress", "Completed", "Overdue", "Cancelled"] as const ).map((s) => (
                 <DropdownMenuItem key={s} className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => onUpdateStatus(s)}>
                   {s}
                 </DropdownMenuItem>
@@ -103,11 +103,11 @@ export default function SelectionToolbar({
               <TooltipContent sideOffset={4}>Update role</TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
-              {( ["Cashier", "Manager", "Admin", "SuperAdmin"] as const ).map((r) => (
-                <DropdownMenuItem key={r} className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => onUpdateRole(r)}>
-                  {r}
-                </DropdownMenuItem>
-              ))}
+              {( ["Employee", "Manager", "HR", "Admin"] as const ).map((r) => (
+                  <DropdownMenuItem key={r} className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => onUpdateRole(r)}>
+                    {r}
+                  </DropdownMenuItem>
+                ))}
             </DropdownMenuContent>
           </DropdownMenu>
         )}
