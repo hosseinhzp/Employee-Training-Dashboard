@@ -212,6 +212,7 @@ export function DataTable<TData, TValue>({
                         table.getColumn("status")?.setFilterValue(next)
                       }}
                       aria-label={`Filter status ${s}`}
+                      className="cursor-pointer"
                     />
                     {statusIcon(s)}
                     <span className="ml-1">{s}</span>
@@ -250,7 +251,8 @@ export function DataTable<TData, TValue>({
                         setPriorityFilter(next)
                         table.getColumn("priority")?.setFilterValue(next)
                       }}
-                      aria-label={`Filter priority ${p}`}
+                        aria-label={`Filter priority ${p}`}
+                        className="cursor-pointer"
                     />
                     {priorityIcon(p)}
                     <span className="ml-1">{p}</span>

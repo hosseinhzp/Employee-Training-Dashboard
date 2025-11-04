@@ -172,6 +172,7 @@ export function DataTable<TData, TValue>({
                         table.getColumn("role")?.setFilterValue(next)
                       }}
                       aria-label={`Filter role ${r}`}
+                      className="cursor-pointer"
                     />
                     {roleIcon(r)}
                     <span className="ml-1">{r}</span>

@@ -79,12 +79,11 @@ export default function Home() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-        <Button>Download</Button>
       </div>
       <Tabs defaultValue="Overview">
         <TabsList className="inline-flex space-x-2 mb-4">
-          <TabsTrigger value="Overview">Overview</TabsTrigger>
-          <TabsTrigger value="Analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="Overview" className="cursor-pointer">Overview</TabsTrigger>
+          <TabsTrigger value="Analytics" className="cursor-pointer">Analytics</TabsTrigger>
         </TabsList>
 
         {/* Overview */}

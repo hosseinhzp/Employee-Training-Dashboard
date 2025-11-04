@@ -37,7 +37,7 @@ export default async function TasksPage() {
   const data = await getData()
 
   return (
-    <div className="container max-w-7xl mx-auto px-6 py-10">
+    <div className="container max-w-7xl mx-auto px-6 py-10 bg-white dark:bg-gray-900">
       <div className="flex items-center justify-between mb-6">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">User List</h1>
@@ -50,7 +50,7 @@ export default async function TasksPage() {
               <UserPlus />
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="bg-gray-50 dark:bg-gray-900">
             <DialogHeader>
               <DialogTitle>Add New User</DialogTitle>
               <DialogDescription>

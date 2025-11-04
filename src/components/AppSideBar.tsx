@@ -10,6 +10,7 @@ import {
   ListTodo,
   LogOut,
   MessageSquare,
+  Settings,
   ShieldCheck,
   User2,
   Users,
@@ -41,22 +42,20 @@ type Item = { title: string; url: string; icon: React.ElementType }
 const items: Item[] = [
   { title: 'Dashboard', url: '/', icon: LayoutDashboard },
   { title: 'Tasks', url: '/tasks', icon: ListTodo },
-  { title: 'Calendar', url: '/calendar', icon: AppWindowIcon },
-  { title: 'Chats', url: '/chats', icon: MessageSquare },
   { title: 'Users', url: '/users', icon: Users },
-  { title: 'Secured by Clerk', url: '/secured', icon: CircleParking },
+  { title: 'Settings', url: '#', icon: Settings },
 ]
 
 const AppSideBar = () => {
   // ProfileBlock: reusable avatar + name + email used in trigger and menu label
   const ProfileBlock = ({ compact }: { compact?: boolean }) => (
     <div className={compact ? 'flex items-center gap-3' : 'flex items-center gap-4'}>
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
+      <Avatar className={compact ? 'h-8 w-8' : 'h-10 w-10'}>
+        <AvatarImage src="/profile-photo.jpg" alt="Emma Lopez" />
       </Avatar>
       <div className={compact ? 'flex flex-col' : 'flex flex-col flex-1'}>
-        <span className="text-sm font-semibold">HosseinHzp</span>
-        <span className="text-xs text-muted-foreground">HosseinHzp@gmail.com</span>
+        <span className="text-sm font-semibold">Emma Lopez</span>
+        <span className="text-xs text-muted-foreground">emma.lopez@example.com</span>
       </div>
     </div>
   )
@@ -69,8 +68,8 @@ const AppSideBar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
-                <Image src="/vercel.svg" alt="Logo" width={20} height={20} />
-                <span>Bora Bora</span>
+                <Image src="/icon.svg" alt="Logo" width={30} height={30} />
+                <h1 className='text-2xl font-semibold font-sans'>AceDesign</h1>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -136,28 +135,6 @@ const AppSideBar = () => {
                   </SidebarMenu>
                 </CollapsibleContent>
               </Collapsible>
-            </SidebarMenu>
-            
-            <SidebarMenu>
-              <Collapsible className="group/collapsible">
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="Errors">
-                    <Bug />
-                    <span>Errors</span>
-                    <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-              </Collapsible>
-            </SidebarMenu>
-
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-  {/* Group: Other */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Other</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuSubButton asChild>
                   <Link href="/profile"><User2 />User Profile</Link>
@@ -183,22 +160,26 @@ const AppSideBar = () => {
             </DropdownMenuLabel>
               
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <VerifiedIcon/>
-              <span>Account</span>
+            <DropdownMenuItem asChild>
+              <Link href="/profile" className="flex items-center">
+                <VerifiedIcon/>
+                <span>Account</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <CreditCard/>
-              <span>Bailing</span>
+              <Settings/>
+              <span>Settings</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <BellRing/>
-              <span>Notifications</span>
+              <Users/>
+              <span>New Team</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator/>
-            <DropdownMenuItem variant='destructive'>
-              <LogOut/>
-              <span>Sign Out</span>
+            <DropdownMenuItem asChild variant='destructive'>
+              <Link href="/login" className="flex items-center">
+                <LogOut/>
+                <span>Sign Out</span>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

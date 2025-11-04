@@ -37,18 +37,18 @@ const LoginPage = () => {
       </div>
       {/* Middle */}
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 max-w-md mx-auto mb-3'>
-        <Button variant="ghost" className='w-full cursor-pointer bg-sky-50 rounded-lg hover:bg-gray-200 py-6'>
+        <Button variant="ghost" className='w-full cursor-pointer bg-sky-50 dark:text-black rounded-lg hover:bg-gray-200 dark:bg-white dark:hover:bg-gray-200 py-6'>
           <Image src="/google.png" alt="Google Icon" width={20} height={20} className='mr-2'/>
           Sign in with Google
         </Button>
-        <Button variant="ghost" className='w-full cursor-pointer bg-sky-50 rounded-lg hover:bg-gray-200 py-6'>
+        <Button variant="ghost" className='w-full cursor-pointer bg-sky-50 dark:text-black rounded-lg hover:bg-gray-200 dark:bg-white dark:hover:bg-gray-200 py-6'>
           <Image src="/github.png" alt="GitHub Icon" width={20} height={20} className='mr-2'/>
           Sign in with GitHub
         </Button>
       </div>
       <div className='relative flex justify-center text-sm text-gray-300'>
         __________________________________
-        <span className='bg-white p-2 text-gray-400 sm:px-5 sm:py-2'>Or</span>
+        <span className='bg-white dark:bg-background p-2 text-gray-400 sm:px-5 sm:py-2'>Or</span>
         __________________________________
       </div>
       {/* Register Form */}

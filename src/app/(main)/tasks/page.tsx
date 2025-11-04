@@ -64,7 +64,7 @@ export default async function TasksPage() {
   const data = await getData()
 
   return (
-    <div className="container max-w-7xl mx-auto px-6 py-10">
+    <div className="container max-w-7xl mx-auto px-6 py-10 bg-white dark:bg-gray-900 rounded-lg">
       <div className="flex items-center justify-between mb-6">
         {/* Page header: title and description */}
         <div className="flex flex-col">
@@ -78,7 +78,7 @@ export default async function TasksPage() {
               <Plus />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[400px] sm:w-[540px]">
+          <SheetContent className="w-[400px] sm:w-[540px] bg-gray-50 dark:bg-gray-900">
             <SheetHeader>
               <SheetTitle>Create Task</SheetTitle>
               <SheetDescription>
