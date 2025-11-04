@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AceDesign | Dashboard Design",
+  title: "AceDesign | Admin Dashboard",
   description: "Admin dashboard built with Next.js",
 };
 
