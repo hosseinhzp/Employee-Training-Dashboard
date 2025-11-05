@@ -169,7 +169,10 @@ export default function Home() {
                   <CardDescription>Check your events and tasks</CardDescription>
                 </CardHeader>
                 <CardContent className="relative overflow-auto max-h-96 md:max-h-full">
-                  <AppCalendar />
+                  {/* Hide calendar on small screens to avoid layout/overflow issues. */}
+                  <div className="hidden md:block">
+                    <AppCalendar />
+                  </div>
                 </CardContent>
               </Card>
               <Card className="sm:col-span-2 lg:col-span-2">
