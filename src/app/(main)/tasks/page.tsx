@@ -1,46 +1,8 @@
 import { columns, Data } from "./columns";
 import { DataTable } from "./data-table";
-import TaskForm from "@/components/tasks/TaskForm";
 import AssignTrainingSheet from "@/components/tasks/AssignTrainingSheet";
-import { Plus } from "lucide-react";
-
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-/*
-  Tasks page
-  - getData(): mocked data provider returning an array of tasks
-  - Default export renders page header and the DataTable component
-  Keep this file lean: the table logic lives in `data-table.tsx` and the
-  column configuration lives in `columns.tsx`.
-*/
 
 async function getData(): Promise<Data[]> {
-  // larger sample set so table spans multiple pages (default page size ~10)
   const items: Data[] = [
     {
       id: "T-001",
@@ -330,10 +292,8 @@ export default async function TasksPage() {
             Manage employee training assignments and progress
           </p>
         </div>
-        {/* instrumented sheet that logs size/placement on open */}
         <AssignTrainingSheet />
       </div>
-      {/* Data table: passes columns definition and data array to the client component */}
       <DataTable columns={columns} data={data} />
     </div>
   );

@@ -19,6 +19,9 @@ import { SidebarTrigger } from "./ui/sidebar";
 
 const NavBar = () => {
   const { setTheme } = useTheme();
+  const setLight = React.useCallback(() => setTheme("light"), [setTheme]);
+  const setDark = React.useCallback(() => setTheme("dark"), [setTheme]);
+  const setSystem = React.useCallback(() => setTheme("system"), [setTheme]);
   return (
     <>
       <nav className="flex items-center justify-between p-4 sticky top-0 z-50 bg-background">
@@ -42,15 +45,9 @@ const NavBar = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                Light
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                Dark
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                System
-              </DropdownMenuItem>
+              <DropdownMenuItem onClick={setLight}>Light</DropdownMenuItem>
+              <DropdownMenuItem onClick={setDark}>Dark</DropdownMenuItem>
+              <DropdownMenuItem onClick={setSystem}>System</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>
@@ -92,4 +89,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default React.memo(NavBar);

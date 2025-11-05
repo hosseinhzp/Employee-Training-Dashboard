@@ -11,10 +11,9 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import LoginForm from "@/components/auth/LoginForm";
 import RegisterForm from "@/components/auth/RegisterForm";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <div className="max-w-md mx-auto w-full min-h-0 lg:min-h-screen pt-6 px-4">
       {/* Breadcrumb */}
@@ -79,4 +78,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

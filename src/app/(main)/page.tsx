@@ -8,22 +8,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React from "react";
 import {
-  Activity,
   ArrowRight,
   BarChart3,
   BookOpen,
   BookOpenText,
-  ChartLine,
   Clock,
   Clock3,
-  CreditCard,
-  DollarSign,
   Ellipsis,
   GraduationCap,
-  HeartPulse,
-  User,
-  User2,
   Users,
 } from "lucide-react";
 import { AppBarChart } from "@/components/AppBarChart";
@@ -33,7 +27,7 @@ import { AppPieChart } from "@/components/AppPieChart";
 import { AppRadarChart } from "@/components/AppRadarChart";
 import { AppCalendar } from "@/components/AppCalendar";
 
-const MetricCard = ({
+const MetricCard = React.memo(function MetricCard({
   title,
   Icon,
   value,
@@ -43,20 +37,26 @@ const MetricCard = ({
   Icon?: React.ElementType;
   value: React.ReactNode;
   description?: string;
-}) => (
-  <Card>
-    <CardHeader>
-      <CardTitle>{title}</CardTitle>
-      {Icon ? <CardAction>{<Icon />}</CardAction> : null}
-    </CardHeader>
-    <CardContent>
-      <p>{value}</p>
-      {description ? <CardDescription>{description}</CardDescription> : null}
-    </CardContent>
-  </Card>
-);
+}) {
+  return (
+    <Card className="h-full">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        {Icon ? (
+          <CardAction>
+            <Icon />
+          </CardAction>
+        ) : null}
+      </CardHeader>
+      <CardContent className="flex flex-col justify-between flex-1">
+        <p>{value}</p>
+        {description ? <CardDescription>{description}</CardDescription> : null}
+      </CardContent>
+    </Card>
+  );
+});
 
-const RecentTrainingItem = ({
+const RecentTrainingItem = React.memo(function RecentTrainingItem({
   name,
   email,
   amount,
@@ -64,28 +64,30 @@ const RecentTrainingItem = ({
   name: string;
   email: string;
   amount: string;
-}) => (
-  <CardContent>
-    <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
-      <span className="rounded-full flex items-center justify-center h-9 w-9 bg-muted shrink-0">
-        PF
-      </span>
-      <div className="flex-1 w-full">
-        <div className="flex flex-col md:flex-row md:justify-between w-full gap-2">
-          <div className="flex flex-col">
-            <h1 className="text-sm font-medium truncate">{name}</h1>
-            <p className="text-xs text-muted-foreground break-words">{email}</p>
-          </div>
-          <div className="mt-1 md:mt-0 md:ml-4 flex-shrink-0">
-            <h1 className="text-sm">{amount}</h1>
+}) {
+  return (
+    <CardContent>
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
+        <span className="rounded-full flex items-center justify-center h-9 w-9 bg-muted shrink-0">
+          PF
+        </span>
+        <div className="flex-1 w-full">
+          <div className="flex flex-col md:flex-row md:justify-between w-full gap-2">
+            <div className="flex flex-col">
+              <h1 className="text-sm font-medium truncate">{name}</h1>
+              <p className="text-xs text-muted-foreground break-words">{email}</p>
+            </div>
+            <div className="mt-1 md:mt-0 md:ml-4 flex-shrink-0">
+              <h1 className="text-sm">{amount}</h1>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </CardContent>
-);
+    </CardContent>
+  );
+});
 
-const ProgressRow = ({
+const ProgressRow = React.memo(function ProgressRow({
   label,
   value,
   right,
@@ -93,17 +95,19 @@ const ProgressRow = ({
   label: string;
   value: number;
   right: React.ReactNode;
-}) => (
-  <CardContent>
-    <h1 className="text-xs text-gray-400">{label}</h1>
-    <div className="flex items-center gap-3">
-      <div className="flex-1">
-        <Progress value={value} className="w-full" />
+}) {
+  return (
+    <CardContent>
+      <h1 className="text-xs text-gray-400">{label}</h1>
+      <div className="flex items-center gap-3">
+        <div className="flex-1">
+          <Progress value={value} className="w-full" />
+        </div>
+        <span className="text-sm font-medium">{right}</span>
       </div>
-      <span className="text-sm font-medium">{right}</span>
-    </div>
-  </CardContent>
-);
+    </CardContent>
+  );
+});
 
 export default function Home() {
   return (
@@ -158,7 +162,7 @@ export default function Home() {
               <AppRadarChart />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols- lg:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
               <Card>
                 <CardHeader>
                   <CardTitle>Calendar</CardTitle>
@@ -175,48 +179,26 @@ export default function Home() {
                     265 courses completed this month.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-7 mt-7">
-                  {[
-                    {
-                      name: "Emma Lopez",
-                      email: "emma.lopez@company.com",
-                      amount: "Leadership Basics",
-                    },
-                    {
-                      name: "James Lee",
-                      email: "james.lee@company.com",
-                      amount: "Time Management",
-                    },
-                    {
-                      name: "Sophia Brown",
-                      email: "sophia.brown@company.com",
-                      amount: "Advanced Excel",
-                    },
-                    {
-                      name: "Liam Johnson",
-                      email: "liam.johnson@company.com",
-                      amount: "Project Communication",
-                    },
-                    {
-                      name: "Emma Davis",
-                      email: "emma.davis@company.com",
-                      amount: "Customer Service Skills",
-                    },
-                    {
-                      name: "Olivia Martinez",
-                      email: "olivia.martinez@company.com",
-                      amount: "Conflict Resolution",
-                    },
-                  ].map((item, i) => (
-                    <RecentTrainingItem key={i} {...item} />
-                  ))}
-                </CardContent>
+                    <CardContent className="space-y-7 mt-7">
+                      {(
+                        [
+                          { name: "Emma Lopez", email: "emma.lopez@company.com", amount: "Leadership Basics" },
+                          { name: "James Lee", email: "james.lee@company.com", amount: "Time Management" },
+                          { name: "Sophia Brown", email: "sophia.brown@company.com", amount: "Advanced Excel" },
+                          { name: "Liam Johnson", email: "liam.johnson@company.com", amount: "Project Communication" },
+                          { name: "Emma Davis", email: "emma.davis@company.com", amount: "Customer Service Skills" },
+                          { name: "Olivia Martinez", email: "olivia.martinez@company.com", amount: "Conflict Resolution" },
+                        ] as const
+                      ).map((item, i) => (
+                        <RecentTrainingItem key={i} {...item} />
+                      ))}
+                    </CardContent>
               </Card>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
               <div>
-                <Card>
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle>Top Training Departments</CardTitle>
                     <CardAction>
@@ -231,45 +213,36 @@ export default function Home() {
                   </CardContent>
 
                   <CardContent>
-                    <div className="space-y-2">
-                      <div className="flex justify-between font-light">
-                        <span>Engineering</span>
-                        <span>5.2K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Sales</span>
-                        <span>3.8K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Human Resources</span>
-                        <span>2.6K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Customer Support</span>
-                        <span>1.9K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Marketing</span>
-                        <span>1.3K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Operations</span>
-                        <span>982</span>
-                      </div>
+                          <div className="space-y-2">
+                            {(
+                              [
+                                ["Engineering", "5.2K"],
+                                ["Sales", "3.8K"],
+                                ["Human Resources", "2.6K"],
+                                ["Customer Support", "1.9K"],
+                                ["Marketing", "1.3K"],
+                                ["Operations", "982"],
+                              ] as const
+                            ).map(([dept, hours], i) => (
+                              <div key={i} className={`flex justify-between font-light ${i === 0 ? "" : "mt-4"}`}>
+                                <span>{dept}</span>
+                                <span>{hours}</span>
+                              </div>
+                            ))}
 
-                      <div className="flex justify-center mt-7">
-                        <Button>
-                          <span>Department Reports</span>
-                          <ArrowRight className="ml-2" />
-                        </Button>
-                      </div>
-                    </div>
+                            <div className="flex justify-center mt-7">
+                              <Button>
+                                <span>Department Reports</span>
+                                <ArrowRight className="ml-2" />
+                              </Button>
+                            </div>
+                          </div>
                   </CardContent>
                 </Card>
               </div>
 
               <div>
-                <Card>
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle>Top Training Courses</CardTitle>
                     <CardAction>
@@ -285,39 +258,30 @@ export default function Home() {
                   </CardContent>
 
                   <CardContent>
-                    <div className="space-y-2">
-                      <div className="flex justify-between font-light">
-                        <span>Leadership Fundamentals</span>
-                        <span>5.2K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Effective Communication</span>
-                        <span>3.8K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Time Management Mastery</span>
-                        <span>2.9K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Technical Onboarding</span>
-                        <span>1.7K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Workplace Safety</span>
-                        <span>1.3K</span>
-                      </div>
-                      <div className="flex justify-between font-light mt-4">
-                        <span>Advanced Problem Solving</span>
-                        <span>980</span>
-                      </div>
+                      <div className="space-y-2">
+                        {(
+                          [
+                            ["Leadership Fundamentals", "5.2K"],
+                            ["Effective Communication", "3.8K"],
+                            ["Time Management Mastery", "2.9K"],
+                            ["Technical Onboarding", "1.7K"],
+                            ["Workplace Safety", "1.3K"],
+                            ["Advanced Problem Solving", "980"],
+                          ] as const
+                        ).map(([course, enrollments], i) => (
+                          <div key={i} className={`flex justify-between font-light ${i === 0 ? "" : "mt-4"}`}>
+                            <span>{course}</span>
+                            <span>{enrollments}</span>
+                          </div>
+                        ))}
 
-                      <div className="flex justify-center mt-7">
-                        <Button>
-                          <span>Course Reports</span>
-                          <ArrowRight className="ml-2" />
-                        </Button>
+                        <div className="flex justify-center mt-7">
+                          <Button>
+                            <span>Course Reports</span>
+                            <ArrowRight className="ml-2" />
+                          </Button>
+                        </div>
                       </div>
-                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -335,53 +299,53 @@ export default function Home() {
 
               {/* Bottom metrics */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle>Total Training Hours</CardTitle>
                     <CardAction>
                       <Clock />
                     </CardAction>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex flex-col justify-between flex-1">
                     <p>12,480</p>
                     <CardDescription>+8.2% vs last month</CardDescription>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle>Active Learners</CardTitle>
                     <CardAction>
                       <Users />
                     </CardAction>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex flex-col justify-between flex-1">
                     <p>313</p>
                     <CardDescription>+5.8% vs last month</CardDescription>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle>Courses Completed</CardTitle>
                     <CardAction>
                       <BookOpen />
                     </CardAction>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex flex-col justify-between flex-1">
                     <p>752</p>
                     <CardDescription>+12.1% vs last month</CardDescription>
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="h-full">
                   <CardHeader>
                     <CardTitle>Avg. Assessment Score</CardTitle>
                     <CardAction>
                       <BarChart3 />
                     </CardAction>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex flex-col justify-between flex-1">
                     <p>87%</p>
                     <CardDescription>+3.4% vs last month</CardDescription>
                   </CardContent>

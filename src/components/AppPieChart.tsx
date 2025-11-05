@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { TrendingUp } from "lucide-react";
 import { Pie, PieChart } from "recharts";
 
@@ -54,9 +55,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function AppPieChart() {
+export const AppPieChart = React.memo(function AppPieChart() {
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col h-full">
       <CardHeader className="items-center pb-0">
         <CardTitle>Training Hours Distribution</CardTitle>
         <CardDescription>January – June 2024</CardDescription>
@@ -91,4 +92,4 @@ export function AppPieChart() {
       </CardFooter>
     </Card>
   );
-}
+});

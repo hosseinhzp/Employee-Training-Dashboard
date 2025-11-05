@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useForm } from "@/hooks/useForm";
 
 type FormState = {
   firstName: string;
@@ -13,54 +14,51 @@ type FormState = {
 };
 
 export default function RegisterForm() {
-  const [form, setForm] = useState<FormState>({
+  const { values: form, errors, setErrors, handleChange } = useForm({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<Partial<FormState>>({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const validate = () => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const validate = useCallback(() => {
     const e: Partial<FormState> = {};
     if (!form.firstName) e.firstName = "First name is required";
     if (!form.lastName) e.lastName = "Last name is required";
     if (!form.email) e.email = "Email is required";
-    else if (!/^\S+@\S+\.\S+$/.test(form.email))
-      e.email = "Enter a valid email";
+    else if (!emailRegex.test(form.email)) e.email = "Enter a valid email";
     if (!form.password) e.password = "Password is required";
     else if (form.password.length < 6)
       e.password = "Password must be at least 6 characters";
     setErrors(e);
     return Object.keys(e).length === 0;
-  };
+  }, [form, setErrors]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((s) => ({ ...s, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: undefined }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSuccess(null);
-    if (!validate()) return;
-    setLoading(true);
-    try {
-      // Frontend-only: simulate network request
-      await new Promise((r) => setTimeout(r, 800));
-      // In a real app, replace with your auth call (fetch/axios/next-auth)
-      setSuccess("Signed in (simulated).");
-      console.log("Login payload:", form);
-    } catch (err) {
-      setErrors({ password: "Network error. Try again." });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setSuccess(null);
+      if (!validate()) return;
+      setLoading(true);
+      try {
+        // Frontend-only: simulate network request
+        await new Promise((r) => setTimeout(r, 800));
+        // In a real app, replace with your auth call (fetch/axios/next-auth)
+        setSuccess("Signed in (simulated).");
+        console.log("Login payload:", form);
+      } catch (err) {
+        setErrors({ password: "Network error. Try again." });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [form, validate, setErrors],
+  );
 
   return (
     <form onSubmit={handleSubmit} className="mt-6" noValidate>

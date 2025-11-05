@@ -4,16 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import {
-  ArrowUp,
-  ArrowDown,
   Clock,
-  RefreshCw,
-  CheckCircle,
-  XCircle,
-  Minus,
-  CircleOff,
-  Circle,
-  CreditCard,
   UserCheck,
   Users,
   Shield,
@@ -27,9 +18,9 @@ export type Data = {
   phone?: string;
   role: "Employee" | "Manager" | "HR" | "Admin";
   department?: string;
-  trainingProgress?: number; // 0-100
+  trainingProgress?: number;
   completedTrainings?: number;
-  lastTrainingDate?: string; // ISO
+  lastTrainingDate?: string;
 };
 
 export const columns: ColumnDef<Data>[] = [
@@ -103,7 +94,6 @@ export const columns: ColumnDef<Data>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Role" />
     ),
-    // support multi-select filtering: filterValue can be an array of allowed values
     filterFn: (row, columnId, filterValue: unknown) => {
       const rowValue = row.getValue(columnId) as string;
       if (filterValue == null) return true;
@@ -111,7 +101,6 @@ export const columns: ColumnDef<Data>[] = [
         if (filterValue.length === 0) return true;
         return filterValue.includes(rowValue);
       }
-      // fallback to equality
       return String(filterValue) === String(rowValue);
     },
     cell: ({ row }) => {

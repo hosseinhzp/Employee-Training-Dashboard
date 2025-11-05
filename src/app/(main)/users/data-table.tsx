@@ -37,15 +37,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   SortDesc,
-  RefreshCw,
-  CheckCircle,
-  XCircle,
-  ArrowUp,
-  ArrowDown,
-  Minus,
-  CircleOff,
-  Circle,
-  CreditCard,
   Users,
   UserCheck,
   Shield,
@@ -64,21 +55,26 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [roleFilter, setRoleFilter] = React.useState<string[]>(() => []);
 
-  const toggle = (arr: string[], val: string) => {
-    if (arr.includes(val)) return arr.filter((v) => v !== val);
-    return [...arr, val];
-  };
+  const roleOptions = React.useMemo(
+    () => ["Employee", "Manager", "HR", "Admin"],
+    [],
+  );
 
-  const getCount = (key: string, val: string) => {
+  const roleCounts = React.useMemo(() => {
+    const map: Record<string, number> = {};
     try {
-      return (data as any[]).filter((d) => d?.[key] === val).length;
+      (data as any[]).forEach((d) => {
+        const v = d?.role ?? "";
+        map[v] = (map[v] || 0) + 1;
+      });
     } catch {
-      return 0;
+      // ignore
     }
-  };
+    return map;
+  }, [data]);
 
-  // map status -> icon component
-  const roleIcon = (r: string) => {
+  // map role -> icon component
+  const roleIcon = React.useCallback((r: string) => {
     switch (r) {
       case "Employee":
         return <Users className="w-4 h-4 text-gray-400" />;
@@ -91,7 +87,7 @@ export function DataTable<TData, TValue>({
       default:
         return null;
     }
-  };
+  }, []);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -122,24 +118,36 @@ export function DataTable<TData, TValue>({
 
   const selectedCount = Object.keys(rowSelection).length;
 
-  const handleDelete = () => {
+  const handleDelete = React.useCallback(() => {
     if (!selectedCount) return;
     if (!confirm(`Delete ${selectedCount} selected user(s)?`)) return;
     // Placeholder: wire to backend or state update
     console.log("Deleting rows:", Object.keys(rowSelection));
     setRowSelection({});
-  };
+  }, [selectedCount, rowSelection]);
 
-  const handleUpdateRole = (
-    status: "Employee" | "Manager" | "HR" | "Admin",
-  ) => {
-    if (!selectedCount) return;
-    // Placeholder: wire to backend or state update
-    console.log("Update status to", status, "for:", Object.keys(rowSelection));
-    setRowSelection({});
-  };
+  const handleUpdateRole = React.useCallback(
+    (status: "Employee" | "Manager" | "HR" | "Admin") => {
+      if (!selectedCount) return;
+      // Placeholder: wire to backend or state update
+      console.log("Update status to", status, "for:", Object.keys(rowSelection));
+      setRowSelection({});
+    },
+    [selectedCount, rowSelection],
+  );
 
-  const handleCloseSelection = () => setRowSelection({});
+  const handleCloseSelection = React.useCallback(() => setRowSelection({}), []);
+
+  const toggleRoleFilter = React.useCallback(
+    (r: string) => {
+      setRoleFilter((prev) => {
+        const next = prev.includes(r) ? prev.filter((v) => v !== r) : [...prev, r];
+        table.getColumn("role")?.setFilterValue(next);
+        return next;
+      });
+    },
+    [table],
+  );
 
   return (
     <div>
@@ -161,25 +169,14 @@ export function DataTable<TData, TValue>({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            {["Employee", "Manager", "HR", "Admin"].map((r) => (
-              <DropdownMenuItem
-                key={r}
-                onClick={() => {
-                  const next = toggle(roleFilter, r);
-                  setRoleFilter(next);
-                  table.getColumn("role")?.setFilterValue(next);
-                }}
-              >
+            {roleOptions.map((r) => (
+              <DropdownMenuItem key={r} onClick={() => toggleRoleFilter(r)}>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     <Checkbox
                       checked={roleFilter.includes(r)}
                       onClick={(e) => e.stopPropagation()}
-                      onCheckedChange={() => {
-                        const next = toggle(roleFilter, r);
-                        setRoleFilter(next);
-                        table.getColumn("role")?.setFilterValue(next);
-                      }}
+                      onCheckedChange={() => toggleRoleFilter(r)}
                       aria-label={`Filter role ${r}`}
                       className="cursor-pointer"
                     />
@@ -187,7 +184,7 @@ export function DataTable<TData, TValue>({
                     <span className="ml-1">{r}</span>
                   </div>
                   <span className="ml-4 text-sm text-muted-foreground">
-                    {getCount("role", r)}
+                    {roleCounts[r] ?? 0}
                   </span>
                 </div>
               </DropdownMenuItem>

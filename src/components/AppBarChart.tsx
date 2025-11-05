@@ -42,12 +42,12 @@ const chartConfig = {
 } satisfies ChartConfig;
 export function AppBarChart() {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>Training Overview</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className="flex-1">
+        <ChartContainer className="h-full aspect-auto" config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis

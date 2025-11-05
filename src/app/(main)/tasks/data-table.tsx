@@ -1,18 +1,5 @@
 "use client";
 
-/*
-  DataTable (client)
-
-  Responsibilities:
-  - Render a searchable, sortable table using @tanstack/react-table
-  - Provide multi-select dropdown filters for Status and Priority
-  - Render pagination controls and a column visibility dropdown
-
-  Implementation notes:
-  - The table instance is created with local state (sorting, filters, visibility)
-  - Column filter logic is defined in `columns.tsx` so this component focuses on UI
-*/
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -55,8 +42,6 @@ import {
   AlertCircle,
   Clock,
   XCircle,
-  ArrowUp,
-  ArrowDown,
   Minus,
 } from "lucide-react";
 import PaginationComponent from "./pagination";
@@ -73,22 +58,24 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [statusFilter, setStatusFilter] = React.useState<string[]>(() => []);
 
-  /* UI filter state (multi-select)
-     - statusFilter: selected status values (e.g. ["In Progress", "Completed"]) */
-  const toggle = (arr: string[], val: string) => {
-    if (arr.includes(val)) return arr.filter((v) => v !== val);
-    return [...arr, val];
-  };
-  // helper to compute counts for each value (counts are from the provided `data` prop)
-  const getCount = (key: string, val: string) => {
-    try {
-      return (data as any[]).filter((d) => d?.[key] === val).length;
-    } catch {
-      return 0;
-    }
-  };
+  const statusOptions = React.useMemo(
+    () => ["Assigned", "In Progress", "Completed", "Overdue", "Cancelled"],
+    [],
+  );
 
-  // map status -> icon component (training statuses) — align with columns.tsx
+  const statusCounts = React.useMemo(() => {
+    const map: Record<string, number> = {};
+    try {
+      (data as any[]).forEach((d) => {
+        const v = d?.status ?? "";
+        map[v] = (map[v] || 0) + 1;
+      });
+    } catch {
+      // ignore
+    }
+    return map;
+  }, [data]);
+
   const statusIcon = (s: string) => {
     switch (s) {
       case "In Progress":
@@ -134,29 +121,39 @@ export function DataTable<TData, TValue>({
 
   const selectedCount = Object.keys(rowSelection).length;
 
-  const handleDelete = () => {
+  const handleDelete = React.useCallback(() => {
     if (!selectedCount) return;
     if (!confirm(`Delete ${selectedCount} selected task(s)?`)) return;
     // Placeholder: wire to backend or state update
     console.log("Deleting rows:", Object.keys(rowSelection));
     setRowSelection({});
-  };
+  }, [selectedCount, rowSelection]);
 
-  const handleUpdateStatus = (
-    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled",
-  ) => {
-    if (!selectedCount) return;
-    // Placeholder: wire to backend or state update
-    console.log(
-      "Update training status to",
-      status,
-      "for:",
-      Object.keys(rowSelection),
-    );
-    setRowSelection({});
-  };
+  const handleUpdateStatus = React.useCallback(
+    (
+      status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled",
+    ) => {
+      if (!selectedCount) return;
+      // Placeholder: wire to backend or state update
+      console.log("Update training status to", status, "for:", Object.keys(rowSelection));
+      setRowSelection({});
+    },
+    [selectedCount, rowSelection],
+  );
 
-  const handleCloseSelection = () => setRowSelection({});
+  const handleCloseSelection = React.useCallback(() => setRowSelection({}), []);
+
+  // Toggle a status filter value and apply it to the table column
+  const toggleStatusFilter = React.useCallback(
+    (s: string) => {
+      setStatusFilter((prev) => {
+        const next = prev.includes(s) ? prev.filter((v) => v !== s) : [...prev, s];
+        table.getColumn("status")?.setFilterValue(next);
+        return next;
+      });
+    },
+    [table],
+  );
 
   return (
     <div>
@@ -180,31 +177,14 @@ export function DataTable<TData, TValue>({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            {[
-              "Assigned",
-              "In Progress",
-              "Completed",
-              "Overdue",
-              "Cancelled",
-            ].map((s) => (
-              <DropdownMenuItem
-                key={s}
-                onClick={() => {
-                  const next = toggle(statusFilter, s);
-                  setStatusFilter(next);
-                  table.getColumn("status")?.setFilterValue(next);
-                }}
-              >
+            {statusOptions.map((s) => (
+              <DropdownMenuItem key={s} onClick={() => toggleStatusFilter(s)}>
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     <Checkbox
                       checked={statusFilter.includes(s)}
                       onClick={(e) => e.stopPropagation()}
-                      onCheckedChange={() => {
-                        const next = toggle(statusFilter, s);
-                        setStatusFilter(next);
-                        table.getColumn("status")?.setFilterValue(next);
-                      }}
+                      onCheckedChange={() => toggleStatusFilter(s)}
                       aria-label={`Filter status ${s}`}
                       className="cursor-pointer"
                     />
@@ -212,7 +192,7 @@ export function DataTable<TData, TValue>({
                     <span className="ml-1">{s}</span>
                   </div>
                   <span className="ml-4 text-sm text-muted-foreground">
-                    {getCount("status", s)}
+                    {statusCounts[s] ?? 0}
                   </span>
                 </div>
               </DropdownMenuItem>

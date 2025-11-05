@@ -33,6 +33,7 @@ import {
 } from "./ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
+import * as React from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -50,6 +51,20 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 
 type Item = { title: string; url: string; icon: React.ElementType };
 
+const ProfileBlock = React.memo(function ProfileBlock({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={compact ? "flex items-center gap-3" : "flex items-center gap-4"}>
+      <Avatar className={compact ? "h-8 w-8" : "h-10 w-10"}>
+        <AvatarImage src="/profile-photo.jpg" alt="Emma Lopez" />
+      </Avatar>
+      <div className={compact ? "flex flex-col" : "flex flex-col flex-1"}>
+        <span className="text-sm font-semibold">Emma Lopez</span>
+        <span className="text-xs text-muted-foreground">emma.lopez@example.com</span>
+      </div>
+    </div>
+  );
+});
+
 const items: Item[] = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Tasks", url: "/tasks", icon: ListTodo },
@@ -58,24 +73,7 @@ const items: Item[] = [
 ];
 
 const AppSideBar = () => {
-  // ProfileBlock: reusable avatar + name + email used in trigger and menu label
-  const ProfileBlock = ({ compact }: { compact?: boolean }) => (
-    <div
-      className={
-        compact ? "flex items-center gap-3" : "flex items-center gap-4"
-      }
-    >
-      <Avatar className={compact ? "h-8 w-8" : "h-10 w-10"}>
-        <AvatarImage src="/profile-photo.jpg" alt="Emma Lopez" />
-      </Avatar>
-      <div className={compact ? "flex flex-col" : "flex flex-col flex-1"}>
-        <span className="text-sm font-semibold">Emma Lopez</span>
-        <span className="text-xs text-muted-foreground">
-          emma.lopez@example.com
-        </span>
-      </div>
-    </div>
-  );
+  // ProfileBlock is defined below (memoized) to avoid re-creating on each render
 
   return (
     <Sidebar collapsible="icon">

@@ -17,30 +17,21 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { DialogClose } from "@/components/ui/dialog";
+import { useForm } from "@/hooks/useForm";
 
 export default function TaskForm() {
-  const [values, setValues] = React.useState({
-    course: "",
-    assignee: "",
-    dueDate: "",
-    hours: "",
-    status: "Assigned",
-  });
+  const { values, setValues, errors, setErrors, handleChange, setFieldValue } =
+    useForm({
+      course: "",
+      assignee: "",
+      dueDate: "",
+      hours: "",
+      status: "Assigned",
+    });
 
-  const [errors, setErrors] = React.useState<Partial<Record<string, string>>>(
-    {},
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setValues((s) => ({ ...s, [name]: value }));
-    setErrors((s) => ({ ...s, [name]: undefined }));
-  };
-
-  const handleSelectChange = (value: string) => {
-    setValues((s) => ({ ...s, status: value }));
-    setErrors((s) => ({ ...s, status: undefined }));
-  };
+  const handleSelectChange = React.useCallback((value: string) => {
+    setFieldValue("status", value);
+  }, [setFieldValue]);
 
   const validate = () => {
     const next: Partial<Record<string, string>> = {};

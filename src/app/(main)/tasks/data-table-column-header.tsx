@@ -1,11 +1,3 @@
-/*
-  Small helper component used in table headers.
-
-  Renders a sortable column header with a dropdown containing:
-  - Asc / Desc sorting shortcuts
-  - A 'Hide' action to toggle column visibility
-*/
-
 import { Column } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from "lucide-react";
 

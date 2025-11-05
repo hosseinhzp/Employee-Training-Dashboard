@@ -1,13 +1,5 @@
 "use client";
 
-/*
-  Column definitions for the Tasks DataTable
-
-  - Defines the visible columns and how to render each cell
-  - Adds `filterFn` for `status` and `priority` so they accept array-based
-    filter values (multi-select)
-*/
-
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
@@ -25,17 +17,15 @@ export type Data = {
   id: string;
   course: string;
   assignee: string;
-  dueDate: string; // ISO date
+  dueDate: string;
   status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled";
-  progress: number; // 0-100
+  progress: number;
   hours: number;
 };
 
 export const columns: ColumnDef<Data>[] = [
   {
     id: "select",
-    // selection column: renders a checkbox in the header (select all) and per-row
-    // checkboxes for row selection
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -94,7 +84,6 @@ export const columns: ColumnDef<Data>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Status" />
     ),
-    // support multi-select filtering: filterValue can be an array of allowed values
     filterFn: (row, columnId, filterValue: unknown) => {
       const rowValue = row.getValue(columnId) as string;
       if (filterValue == null) return true;

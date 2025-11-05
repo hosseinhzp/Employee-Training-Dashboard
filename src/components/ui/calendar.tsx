@@ -19,9 +19,11 @@ function Calendar({
   buttonVariant = "ghost",
   formatters,
   components,
+  compact = true,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"];
+  compact?: boolean;
 }) {
   const defaultClassNames = getDefaultClassNames();
 
@@ -29,8 +31,10 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn(
-        // smaller cell size and padding on mobile, restore larger cells on md+
-        "bg-background group/calendar p-2 md:p-3 md:[--cell-size:--spacing(8)] [--cell-size:--spacing(6)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
+        // compressed sizing when used inside a card: smaller --cell-size and reduced padding
+        compact
+          ? "bg-background group/calendar p-1 md:p-2 md:[--cell-size:--spacing(6)] [--cell-size:--spacing(5)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent"
+          : "bg-background group/calendar p-2 md:p-3 md:[--cell-size:--spacing(8)] [--cell-size:--spacing(6)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className,
@@ -42,10 +46,6 @@ function Calendar({
         ...formatters,
       }}
       classNames={{
-        // Make the calendar take the full width of its container on mobile
-        // and center its months block so it doesn't overflow card boundaries.
-        // Make the calendar span the full width of the card so it "covers" the card area
-        // while keeping the mobile stacked layout intact.
         root: cn("w-full", defaultClassNames.root),
         months: cn(
           "flex gap-4 flex-col md:flex-row relative w-full",

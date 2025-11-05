@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { TrendingUp } from "lucide-react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
@@ -40,7 +41,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function AppAreaChart() {
+export const AppAreaChart = React.memo(function AppAreaChart() {
   return (
     <Card className="h-120 overflow-hidden">
       <CardHeader>
@@ -117,4 +118,4 @@ export function AppAreaChart() {
       </CardFooter>
     </Card>
   );
-}
+});

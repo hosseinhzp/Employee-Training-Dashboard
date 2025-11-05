@@ -17,6 +17,40 @@ import ProfileForm from "@/components/users/ProfileForm";
 import PersonalInfoForm from "@/components/users/PersonalInfoForm";
 import AddressForm from "@/components/users/AddressForm";
 
+// Small reusable dialog used for edit actions. Keeps identical behavior but
+// avoids duplicating the Dialog/Trigger/Content markup throughout the file.
+const EditDialog = React.memo(function EditDialog({
+  title,
+  description,
+  triggerClassName,
+  triggerLabel,
+  children,
+}: {
+  title: string;
+  description: string;
+  triggerClassName: string;
+  triggerLabel: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className={triggerClassName} aria-label={triggerLabel}>
+          <Pencil />
+          Edit
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
+        {children}
+      </DialogContent>
+    </Dialog>
+  );
+});
+
 const ProfilePage = () => {
   return (
     <div className="container max-w-7xl mx-auto px-6 py-10">
@@ -29,26 +63,14 @@ const ProfilePage = () => {
             Profile
           </h1>
           {/* DialogTrigger for desktop edit button — profile (includes social links) */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full"
-                aria-label="Edit profile"
-              >
-                <Pencil />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                  Update profile details and social links
-                </DialogDescription>
-              </DialogHeader>
-              <ProfileForm />
-            </DialogContent>
-          </Dialog>
+          <EditDialog
+            title="Edit profile"
+            description="Update profile details and social links"
+            triggerClassName="hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full"
+            triggerLabel="Edit profile"
+          >
+            <ProfileForm />
+          </EditDialog>
         </div>
         <div className="flex flex-col items-center gap-4 xl:flex-row xl:items-center">
           <div className="relative rounded-full overflow-hidden w-35 h-35">
@@ -66,82 +88,39 @@ const ProfilePage = () => {
             </span>
           </div>
           <div className="order-2 flex items-center gap-2 xl:order-3 xl:ml-auto">
-            <Link
-              href="#"
-              aria-label="Facebook profile"
-              className="border-3 rounded-full w-10 h-10 flex items-center justify-center"
-            >
-              <Image
-                src="/facebook.svg"
-                alt="Facebook logo"
-                width={25}
-                height={25}
-                className="block m-auto dark:invert"
-              />
-            </Link>
-            <Link
-              href="#"
-              aria-label="X profile"
-              className="border-3 rounded-full w-10 h-10 flex items-center justify-center"
-            >
-              <Image
-                src="/X.svg"
-                alt="X logo"
-                width={25}
-                height={25}
-                className="block m-auto dark:invert"
-              />
-            </Link>
-            <Link
-              href="#"
-              aria-label="GitHub profile"
-              className="border-3 rounded-full w-10 h-10 flex items-center justify-center"
-            >
-              <Image
-                src="/github.svg"
-                alt="GitHub logo"
-                width={25}
-                height={25}
-                className="block m-auto dark:invert"
-              />
-            </Link>
-            <Link
-              href="#"
-              aria-label="Instagram profile"
-              className="border-3 rounded-full w-10 h-10 flex items-center justify-center"
-            >
-              <Image
-                src="/instagram.svg"
-                alt="Instagram logo"
-                width={25}
-                height={25}
-                className="block m-auto dark:invert"
-              />
-            </Link>
+            {[
+              { href: "#", src: "/facebook.svg", alt: "Facebook logo", label: "Facebook profile" },
+              { href: "#", src: "/X.svg", alt: "X logo", label: "X profile" },
+              { href: "#", src: "/github.svg", alt: "GitHub logo", label: "GitHub profile" },
+              { href: "#", src: "/instagram.svg", alt: "Instagram logo", label: "Instagram profile" },
+            ].map((s) => (
+              <Link
+                key={s.src}
+                href={s.href}
+                aria-label={s.label}
+                className="border-3 rounded-full w-10 h-10 flex items-center justify-center"
+              >
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  width={25}
+                  height={25}
+                  className="block m-auto dark:invert"
+                />
+              </Link>
+            ))}
           </div>
         </div>
         <div className="mt-4 flex justify-center xl:justify-end">
           {/* mobile trigger — profile (includes social links) */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden"
-                aria-label="Edit profile"
-              >
-                <Pencil />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit profile</DialogTitle>
-                <DialogDescription>
-                  Update profile details and social links
-                </DialogDescription>
-              </DialogHeader>
-              <ProfileForm />
-            </DialogContent>
-          </Dialog>
+          <EditDialog
+            title="Edit profile"
+            description="Update profile details and social links"
+            triggerClassName="w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden"
+            triggerLabel="Edit profile"
+          >
+            <ProfileForm />
+          </EditDialog>
         </div>
       </div>
 
@@ -152,26 +131,14 @@ const ProfilePage = () => {
             Personal Information
           </h1>
           {/* desktop trigger — personal information (no social links) */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full"
-                aria-label="Edit personal information"
-              >
-                <Pencil />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit personal information</DialogTitle>
-                <DialogDescription>
-                  Update personal information fields
-                </DialogDescription>
-              </DialogHeader>
-              <PersonalInfoForm />
-            </DialogContent>
-          </Dialog>
+          <EditDialog
+            title="Edit personal information"
+            description="Update personal information fields"
+            triggerClassName="hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full"
+            triggerLabel="Edit personal information"
+          >
+            <PersonalInfoForm />
+          </EditDialog>
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
           <div>
@@ -217,26 +184,14 @@ const ProfilePage = () => {
         </div>
         <div className="mt-4 flex justify-center xl:justify-end">
           {/* mobile trigger — personal information (no social links) */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden"
-                aria-label="Edit personal information"
-              >
-                <Pencil />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit personal information</DialogTitle>
-                <DialogDescription>
-                  Update personal information fields
-                </DialogDescription>
-              </DialogHeader>
-              <PersonalInfoForm />
-            </DialogContent>
-          </Dialog>
+          <EditDialog
+            title="Edit personal information"
+            description="Update personal information fields"
+            triggerClassName="w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden"
+            triggerLabel="Edit personal information"
+          >
+            <PersonalInfoForm />
+          </EditDialog>
         </div>
       </div>
 
@@ -247,24 +202,14 @@ const ProfilePage = () => {
             Address
           </h1>
           {/* address dialog - desktop trigger */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full"
-                aria-label="Edit address"
-              >
-                <Pencil />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit address</DialogTitle>
-                <DialogDescription>Update address details</DialogDescription>
-              </DialogHeader>
-              <AddressForm />
-            </DialogContent>
-          </Dialog>
+          <EditDialog
+            title="Edit address"
+            description="Update address details"
+            triggerClassName="hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full"
+            triggerLabel="Edit address"
+          >
+            <AddressForm />
+          </EditDialog>
         </div>
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32">
           <div>
@@ -302,24 +247,14 @@ const ProfilePage = () => {
         </div>
         <div className="mt-4 flex justify-center xl:justify-end">
           {/* address dialog - mobile trigger */}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                className="w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden"
-                aria-label="Edit address"
-              >
-                <Pencil />
-                Edit
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit address</DialogTitle>
-                <DialogDescription>Update address details</DialogDescription>
-              </DialogHeader>
-              <AddressForm />
-            </DialogContent>
-          </Dialog>
+          <EditDialog
+            title="Edit address"
+            description="Update address details"
+            triggerClassName="w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden"
+            triggerLabel="Edit address"
+          >
+            <AddressForm />
+          </EditDialog>
         </div>
       </div>
     </div>

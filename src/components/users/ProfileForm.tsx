@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel, FieldContent } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@/components/ui/dialog";
+import { useForm } from "@/hooks/useForm";
 
 export default function ProfileForm() {
-  const [values, setValues] = React.useState({
+  const { values, setValues, handleChange } = useForm({
     displayName: "",
     jobTitle: "",
     location: "",
@@ -16,11 +17,6 @@ export default function ProfileForm() {
     github: "",
     instagram: "",
   });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setValues((s) => ({ ...s, [name]: value }));
-  };
 
   const handleSave = (e?: React.FormEvent) => {
     e?.preventDefault();

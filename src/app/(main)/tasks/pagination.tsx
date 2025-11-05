@@ -1,15 +1,6 @@
 import * as React from "react";
 import { Table } from "@tanstack/react-table";
 
-/*
-  PaginationComponent
-
-  Small wrapper that renders numbered pagination and Prev/Next controls
-  for a @tanstack/react-table instance. It builds a compact pagination
-  (with ellipsis) for large page counts and calls the table's navigation
-  methods (setPageIndex, nextPage, previousPage).
-*/
-
 import {
   Pagination,
   PaginationContent,

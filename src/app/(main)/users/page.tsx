@@ -1,18 +1,6 @@
 import { columns, Data } from "./columns";
 import { DataTable } from "./data-table";
-import { UserPlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import UserForm from "@/components/users/UserForm";
 import AddUserDialog from "@/components/users/AddUserDialog";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 async function getData(): Promise<Data[]> {
   return [
@@ -317,7 +305,6 @@ export default async function TasksPage() {
             Manage your users and monitor training progress.
           </p>
         </div>
-        {/* instrumented dialog that logs size/placement on open */}
         <AddUserDialog />
       </div>
       <DataTable columns={columns} data={data} />

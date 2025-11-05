@@ -8,14 +8,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-/* Card wrapper removed for a flatter login form */
-
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 const ResetPasswordPage = () => {
   return (
