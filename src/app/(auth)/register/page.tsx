@@ -56,7 +56,7 @@ const RegisterPage = () => {
           className="w-full cursor-pointer bg-sky-50 dark:text-black rounded-lg hover:bg-gray-200 dark:bg-white dark:hover:bg-gray-200 py-6"
         >
           <Image
-            src="/github.png"
+            src="/github.svg"
             alt="GitHub Icon"
             width={20}
             height={20}
