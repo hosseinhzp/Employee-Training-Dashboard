@@ -59,8 +59,8 @@ export default function TaskForm() {
   return (
     // give the form an id so the SheetFooter can submit it from outside
     <form id="assign-training-form" onSubmit={handleSave} className="space-y-4">
-      <div className="grid grid-cols-[110px_1fr] gap-4 items-center">
-        <label className="text-right pr-4 text-sm font-medium">Course</label>
+      <div className="grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-2 sm:gap-4 items-center">
+      <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Course</label>
         <div className="flex flex-col">
           <Input
             id="task-course"
@@ -74,7 +74,7 @@ export default function TaskForm() {
           <FieldError className="mt-1 text-sm text-destructive">{errors.course}</FieldError>
         </div>
 
-        <label className="text-right pr-4 text-sm font-medium">Assignee</label>
+  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Assignee</label>
         <div className="flex flex-col">
           <Input
             id="task-assignee"
@@ -88,7 +88,7 @@ export default function TaskForm() {
           <FieldError className="mt-1 text-sm text-destructive">{errors.assignee}</FieldError>
         </div>
 
-        <label className="text-right pr-4 text-sm font-medium">Due date</label>
+  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Due date</label>
         <div className="flex flex-col">
           <Input
             id="task-due"
@@ -102,7 +102,7 @@ export default function TaskForm() {
           <FieldError className="mt-1 text-sm text-destructive">{errors.dueDate}</FieldError>
         </div>
 
-        <label className="text-right pr-4 text-sm font-medium">Hours</label>
+  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Hours</label>
         <div className="flex flex-col">
           <Input
             id="task-hours"
@@ -118,7 +118,7 @@ export default function TaskForm() {
           <FieldError className="mt-1 text-sm text-destructive">{errors.hours}</FieldError>
         </div>
 
-        <label className="text-right pr-4 text-sm font-medium">Status</label>
+  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Status</label>
         <div className="flex flex-col">
           <Select onValueChange={handleSelectChange} value={values.status}>
             <SelectTrigger className="w-full" aria-invalid={!!errors.status}>

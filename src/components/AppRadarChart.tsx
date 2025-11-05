@@ -51,13 +51,9 @@ export function AppRadarChart() {
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px] [&_.recharts-surface]:overflow-visible"
         >
-          <RadarChart data={chartData} margin={{ top: 30, right: 30, bottom: 30, left: 30 }} outerRadius={90}>
+          <RadarChart data={chartData} margin={{ top: 30, right: 30, bottom: 30, left: 30 }} outerRadius={100}>
             <PolarGrid />
-            <PolarAngleAxis
-              dataKey="skill"
-              tick={{ fontSize: 12 }}
-              tickLine={false}
-            />
+            <PolarAngleAxis dataKey="skill" tick={false} tickLine={false} />
             <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 

@@ -22,7 +22,6 @@ export default function UserForm() {
     role: "",
     department: "",
     manager: "",
-    certifications: "",
   })
 
   const [errors, setErrors] = React.useState<Partial<Record<string, string>>>({})
@@ -48,7 +47,7 @@ export default function UserForm() {
     // newly added fields should be required as well
     if (!values.department || !values.department.trim()) next.department = "Department is required."
     if (!values.manager || !values.manager.trim()) next.manager = "Manager is required."
-    if (!values.certifications || !values.certifications.trim()) next.certifications = "Certifications are required."
+    // certifications field removed
     return next
   }
 
@@ -68,8 +67,8 @@ export default function UserForm() {
 
   return (
     <form onSubmit={handleSave} className="space-y-4">
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Name</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-3">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Name</FieldLabel>
         <FieldContent className="flex flex-col">
           <Input
             id="user-name"
@@ -84,8 +83,8 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Username</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-3">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Username</FieldLabel>
         <FieldContent className="flex flex-col">
           <Input
             id="user-username"
@@ -100,8 +99,8 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Email</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-3">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Email</FieldLabel>
         <FieldContent className="flex flex-col">
           <Input
             id="user-email"
@@ -117,8 +116,8 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Phone</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-3">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Phone</FieldLabel>
         <FieldContent className="flex flex-col">
           <Input
             id="user-phone"
@@ -134,8 +133,8 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Role</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-3">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Role</FieldLabel>
         <FieldContent className="flex flex-col">
           <Select onValueChange={handleSelectChange} value={values.role}>
             <SelectTrigger className="w-full sm:w-[300px]" aria-invalid={!!errors.role}>
@@ -152,8 +151,8 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Department</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-3">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Department</FieldLabel>
         <FieldContent className="flex flex-col">
           <Input
             id="user-department"
@@ -168,8 +167,8 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Manager</FieldLabel>
+  <Field orientation="responsive" className="gap-2 sm:gap-6">
+    <FieldLabel className="w-[110px] text-left sm:text-right">Manager</FieldLabel>
         <FieldContent className="flex flex-col">
           <Input
             id="user-manager"
@@ -183,20 +182,7 @@ export default function UserForm() {
         </FieldContent>
       </Field>
 
-      <Field orientation="horizontal" className="gap-6">
-        <FieldLabel className="w-[110px]">Certifications</FieldLabel>
-        <FieldContent className="flex flex-col">
-          <Input
-            id="user-certifications"
-            name="certifications"
-            placeholder="Comma separated: ISO,Privacy..."
-            className="w-full sm:w-[300px]"
-            value={values.certifications}
-            onChange={handleChange}
-          />
-          <FieldError className="mt-1 text-sm text-destructive">{errors.certifications}</FieldError>
-        </FieldContent>
-      </Field>
+      {/* Certifications removed */}
 
       <div className="flex justify-end gap-2">
         <DialogClose asChild>

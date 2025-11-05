@@ -103,12 +103,16 @@ const AppSideBar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <Collapsible className="group/collapsible">
+                {/* Use a native button as the collapsible trigger to avoid asChild prop forwarding complexity */}
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="Auth">
+                  <button
+                    type="button"
+                    className="cursor-pointer flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm hover:bg-sidebar-accent [&>svg]:size-4 [&>svg]:shrink-0 [&>span:last-child]:truncate"
+                  >
                     <ShieldCheck />
                     <span>Auth</span>
                     <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
+                  </button>
                 </CollapsibleTrigger>
 
                 <CollapsibleContent>

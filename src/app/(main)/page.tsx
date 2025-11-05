@@ -49,14 +49,18 @@ const RecentTrainingItem = ({
   amount: string
 }) => (
   <CardContent>
-    <div className="flex items-center gap-4">
-      <span className="rounded-full flex items-center justify-center h-9 w-9 bg-muted">PF</span>
-      <div className="flex w-full justify-between items-center">
-        <div className="flex flex-col flex-1">
-          <h1>{name}</h1>
-          <p>{email}</p>
+    <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
+      <span className="rounded-full flex items-center justify-center h-9 w-9 bg-muted shrink-0">PF</span>
+      <div className="flex-1 w-full">
+        <div className="flex flex-col md:flex-row md:justify-between w-full gap-2">
+          <div className="flex flex-col">
+            <h1 className="text-sm font-medium truncate">{name}</h1>
+            <p className="text-xs text-muted-foreground break-words">{email}</p>
+          </div>
+          <div className="mt-1 md:mt-0 md:ml-4 flex-shrink-0">
+            <h1 className="text-sm">{amount}</h1>
+          </div>
         </div>
-        <h1 className="ml-4">{amount}</h1>
       </div>
     </div>
   </CardContent>
@@ -104,7 +108,7 @@ export default function Home() {
             <AppRadarChart/>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols- lg:grid-cols-3 gap-4 mt-4">
             <Card>
               <CardHeader>
                 <CardTitle>Calendar</CardTitle>
@@ -128,6 +132,7 @@ export default function Home() {
                 { name: "Sophia Brown", email: "sophia.brown@company.com", amount: "Advanced Excel" },
                 { name: "Liam Johnson", email: "liam.johnson@company.com", amount: "Project Communication" },
                 { name: "Emma Davis", email: "emma.davis@company.com", amount: "Customer Service Skills" },
+                { name: "Olivia Martinez", email: "olivia.martinez@company.com", amount: "Conflict Resolution" },
               ].map((item, i) => (
                 <RecentTrainingItem key={i} {...item} />
               ))}

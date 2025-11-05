@@ -510,7 +510,31 @@ function SidebarMenuButton({
   tooltip?: string | React.ComponentProps<typeof TooltipContent>
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const Comp = asChild ? Slot : "button"
-  const { isMobile, state } = useSidebar()
+  const { isMobile, state, setOpenMobile } = useSidebar()
+
+  // intercept clicks to close the mobile sheet when a navigation item is clicked
+  // Instead of relying on the DOM attribute (which can be flaky with wrappers),
+  // detect collapsible triggers by checking whether the React props include
+  // an `aria-expanded` prop. Collapsible providers (Radix, etc.) inject that
+  // prop into the trigger when `asChild` is used.
+  // intercept clicks to close the mobile sheet when a navigation item is clicked
+  const { onClick: _onClick, ...rest } = props as any
+
+  const handleClick = (event: React.MouseEvent) => {
+    try {
+      _onClick?.(event)
+    } catch (e) {
+      // swallow errors from user-provided onClick to still allow sidebar close logic
+    }
+
+    if (isMobile) {
+      const el = event.currentTarget as HTMLElement
+      // don't close sidebar if this button is a collapsible toggle (has aria-expanded)
+      if (!el.hasAttribute("aria-expanded")) {
+        setOpenMobile(false)
+      }
+    }
+  }
 
   const button = (
     <Comp
@@ -519,7 +543,8 @@ function SidebarMenuButton({
       data-size={size}
       data-active={isActive}
       className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-      {...props}
+      onClick={handleClick}
+      {...rest}
     />
   )
 
@@ -680,6 +705,23 @@ function SidebarMenuSubButton({
 }) {
   const Comp = asChild ? Slot : "a"
 
+  const { onClick: _onClick, ...rest } = props as any
+  const { isMobile, setOpenMobile } = useSidebar()
+
+  const handleClick = (event: React.MouseEvent) => {
+    try {
+      _onClick?.(event)
+    } catch (e) {
+      // ignore
+    }
+    if (isMobile) {
+      const el = event.currentTarget as HTMLElement
+      if (!el.hasAttribute("aria-expanded")) {
+        setOpenMobile(false)
+      }
+    }
+  }
+
   return (
     <Comp
       data-slot="sidebar-menu-sub-button"
@@ -694,7 +736,8 @@ function SidebarMenuSubButton({
         "group-data-[collapsible=icon]:hidden",
         className
       )}
-      {...props}
+      onClick={handleClick}
+      {...rest}
     />
   )
 }

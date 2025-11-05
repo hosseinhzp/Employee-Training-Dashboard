@@ -1,6 +1,7 @@
 import { columns, Data } from "./columns"
 import { DataTable } from "./data-table"
 import TaskForm from "@/components/tasks/TaskForm"
+import AssignTrainingSheet from "@/components/tasks/AssignTrainingSheet"
 import { Plus } from "lucide-react"
 
 import {
@@ -84,40 +85,14 @@ export default async function TasksPage() {
 
   return (
     <div className="container max-w-7xl mx-auto px-6 py-10 bg-white dark:bg-gray-900 rounded-lg">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3 sm:gap-0">
         {/* Page header: title and description */}
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold">Training Assignments</h1>
           <p className="text-md text-gray-400">Manage employee training assignments and progress</p>
         </div>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button>
-              <span>Assign Training</span>
-              <Plus />
-            </Button>
-          </SheetTrigger>
-          <SheetContent className="w-[400px] sm:w-[540px] bg-gray-50 dark:bg-gray-900">
-            <SheetHeader>
-              <SheetTitle>Assign Training</SheetTitle>
-              <SheetDescription>
-                Assign a course to an employee and set due date / estimated hours.
-              </SheetDescription>
-            </SheetHeader>
-
-            <div className="px-4">
-              <TaskForm />
-            </div>
-
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button variant="outline">Close</Button>
-              </SheetClose>
-              <Button form="assign-training-form" type="submit">Assign</Button>
-            </SheetFooter>
-
-          </SheetContent>
-        </Sheet>
+        {/* instrumented sheet that logs size/placement on open */}
+        <AssignTrainingSheet />
       </div>
       {/* Data table: passes columns definition and data array to the client component */}
       <DataTable columns={columns} data={data} />

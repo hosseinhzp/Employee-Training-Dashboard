@@ -15,9 +15,9 @@ import LoginForm from '@/components/auth/LoginForm'
 
 const LoginPage = () => {
   return (
-    <div className='max-w-md mx-auto w-full min-h-screen pt-10'>
+    <div className='max-w-md mx-auto w-full min-h-0 lg:min-h-screen pt-6 px-4'>
       {/* Breadcrumb */}
-      <Breadcrumb className="mb-20">
+  <Breadcrumb className="mb-8 lg:mb-20">
         <BreadcrumbList>
           <BreadcrumbSeparator reversed/>
           <BreadcrumbItem>
@@ -28,7 +28,7 @@ const LoginPage = () => {
         </BreadcrumbList>
       </Breadcrumb>
       {/* Top */}
-      <div className='mx-auto flex w-full max-w-md flex-1 flex-col justify-center'>
+  <div className='mx-auto flex w-full max-w-md flex-col justify-center'>
         <div className='mb-5 sm:mb-8'>
           <h1 className='text-4xl font-bold'>Sign In</h1>
           <p className='text-sm text-muted-foreground mt-3'>Enter your email and password to sign in!</p>

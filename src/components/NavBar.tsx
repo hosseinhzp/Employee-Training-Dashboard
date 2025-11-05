@@ -31,9 +31,11 @@ const NavBar = () => {
 
       {/* RIGHT */}
       <div className='flex items-center gap-4'>
-        <Command>
-          <CommandInput placeholder="Type or search..." />
-        </Command>
+        <div className="hidden md:block">
+          <Command>
+            <CommandInput placeholder="Type or search..." />
+          </Command>
+        </div>
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

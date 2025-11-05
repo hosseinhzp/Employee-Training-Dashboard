@@ -26,10 +26,11 @@ function Calendar({
   const defaultClassNames = getDefaultClassNames()
 
   return (
-    <DayPicker
-      showOutsideDays={showOutsideDays}
-      className={cn(
-        "bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
+       <DayPicker
+         showOutsideDays={showOutsideDays}
+         className={cn(
+           // smaller cell size and padding on mobile, restore larger cells on md+
+           "bg-background group/calendar p-2 md:p-3 md:[--cell-size:--spacing(8)] [--cell-size:--spacing(6)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className
@@ -41,12 +42,16 @@ function Calendar({
         ...formatters,
       }}
       classNames={{
-        root: cn("w-fit", defaultClassNames.root),
+  // Make the calendar take the full width of its container on mobile
+  // and center its months block so it doesn't overflow card boundaries.
+  // Make the calendar span the full width of the card so it "covers" the card area
+  // while keeping the mobile stacked layout intact.
+  root: cn("w-full", defaultClassNames.root),
         months: cn(
-          "flex gap-4 flex-col md:flex-row relative",
+          "flex gap-4 flex-col md:flex-row relative w-full",
           defaultClassNames.months
         ),
-        month: cn("flex flex-col w-full gap-4", defaultClassNames.month),
+           month: cn("flex flex-col w-full gap-2 md:gap-4", defaultClassNames.month),
         nav: cn(
           "flex items-center gap-1 w-full absolute top-0 inset-x-0 justify-between",
           defaultClassNames.nav

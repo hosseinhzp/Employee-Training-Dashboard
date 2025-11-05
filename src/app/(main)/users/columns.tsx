@@ -16,7 +16,6 @@ export type Data = {
   trainingProgress?: number // 0-100
   completedTrainings?: number
   lastTrainingDate?: string // ISO
-  certifications?: string[]
 }
 
 export const columns: ColumnDef<Data>[] = [
