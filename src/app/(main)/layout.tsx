@@ -30,7 +30,10 @@ export default async function MainLayout({
   const _defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
 
   return (
-    <div className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`} suppressHydrationWarning={true}>
+    <div
+      className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+      suppressHydrationWarning={true}
+    >
       <SidebarProvider>
         <AppSideBar />
         <main className="w-full min-h-screen flex flex-col">

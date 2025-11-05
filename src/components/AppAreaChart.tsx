@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -10,15 +10,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-export const description = "Smooth area chart for employee training analytics"
+export const description = "Smooth area chart for employee training analytics";
 
 const chartData = [
   { month: "January", newEmployees: 120, experienced: 200 },
@@ -27,7 +27,7 @@ const chartData = [
   { month: "April", newEmployees: 175, experienced: 260 },
   { month: "May", newEmployees: 220, experienced: 280 },
   { month: "June", newEmployees: 240, experienced: 300 },
-]
+];
 
 const chartConfig = {
   newEmployees: {
@@ -38,7 +38,7 @@ const chartConfig = {
     label: "Experienced Employees",
     color: "var(--chart-1)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function AppAreaChart() {
   return (
@@ -109,11 +109,12 @@ export function AppAreaChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none font-medium">
-              Training hours increased by 12.5% <TrendingUp className="h-4 w-4" />
+              Training hours increased by 12.5%{" "}
+              <TrendingUp className="h-4 w-4" />
             </div>
           </div>
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

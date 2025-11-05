@@ -1,17 +1,22 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Field, FieldLabel, FieldContent, FieldError } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldLabel,
+  FieldContent,
+  FieldError,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select"
-import { DialogClose } from "@/components/ui/dialog"
+} from "@/components/ui/select";
+import { DialogClose } from "@/components/ui/dialog";
 
 export default function TaskForm() {
   const [values, setValues] = React.useState({
@@ -20,47 +25,52 @@ export default function TaskForm() {
     dueDate: "",
     hours: "",
     status: "Assigned",
-  })
+  });
 
-  const [errors, setErrors] = React.useState<Partial<Record<string, string>>>({})
+  const [errors, setErrors] = React.useState<Partial<Record<string, string>>>(
+    {},
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setValues((s) => ({ ...s, [name]: value }))
-    setErrors((s) => ({ ...s, [name]: undefined }))
-  }
+    const { name, value } = e.target;
+    setValues((s) => ({ ...s, [name]: value }));
+    setErrors((s) => ({ ...s, [name]: undefined }));
+  };
 
   const handleSelectChange = (value: string) => {
-    setValues((s) => ({ ...s, status: value }))
-    setErrors((s) => ({ ...s, status: undefined }))
-  }
+    setValues((s) => ({ ...s, status: value }));
+    setErrors((s) => ({ ...s, status: undefined }));
+  };
 
   const validate = () => {
-    const next: Partial<Record<string, string>> = {}
-    if (!values.course.trim()) next.course = "Course is required."
-    if (!values.assignee.trim()) next.assignee = "Assignee is required."
-    if (!values.dueDate.trim()) next.dueDate = "Due date is required."
-    if (!values.hours.trim() || Number(values.hours) <= 0) next.hours = "Estimated hours must be > 0"
-    return next
-  }
+    const next: Partial<Record<string, string>> = {};
+    if (!values.course.trim()) next.course = "Course is required.";
+    if (!values.assignee.trim()) next.assignee = "Assignee is required.";
+    if (!values.dueDate.trim()) next.dueDate = "Due date is required.";
+    if (!values.hours.trim() || Number(values.hours) <= 0)
+      next.hours = "Estimated hours must be > 0";
+    return next;
+  };
 
   const handleSave = (e?: React.FormEvent) => {
-    e?.preventDefault()
-    const next = validate()
-    setErrors(next)
-    const hasErrors = Object.keys(next).length > 0
+    e?.preventDefault();
+    const next = validate();
+    setErrors(next);
+    const hasErrors = Object.keys(next).length > 0;
     if (!hasErrors) {
       // success placeholder: wire to backend as needed
-      console.log("Assigned training (mock)", values)
-      alert("Assigned (mock)")
+      console.log("Assigned training (mock)", values);
+      alert("Assigned (mock)");
     }
-  }
+  };
 
   return (
     // give the form an id so the SheetFooter can submit it from outside
     <form id="assign-training-form" onSubmit={handleSave} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-2 sm:gap-4 items-center">
-      <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Course</label>
+        <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">
+          Course
+        </label>
         <div className="flex flex-col">
           <Input
             id="task-course"
@@ -71,10 +81,14 @@ export default function TaskForm() {
             onChange={handleChange}
             aria-invalid={!!errors.course}
           />
-          <FieldError className="mt-1 text-sm text-destructive">{errors.course}</FieldError>
+          <FieldError className="mt-1 text-sm text-destructive">
+            {errors.course}
+          </FieldError>
         </div>
 
-  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Assignee</label>
+        <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">
+          Assignee
+        </label>
         <div className="flex flex-col">
           <Input
             id="task-assignee"
@@ -85,10 +99,14 @@ export default function TaskForm() {
             onChange={handleChange}
             aria-invalid={!!errors.assignee}
           />
-          <FieldError className="mt-1 text-sm text-destructive">{errors.assignee}</FieldError>
+          <FieldError className="mt-1 text-sm text-destructive">
+            {errors.assignee}
+          </FieldError>
         </div>
 
-  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Due date</label>
+        <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">
+          Due date
+        </label>
         <div className="flex flex-col">
           <Input
             id="task-due"
@@ -99,10 +117,14 @@ export default function TaskForm() {
             onChange={handleChange}
             aria-invalid={!!errors.dueDate}
           />
-          <FieldError className="mt-1 text-sm text-destructive">{errors.dueDate}</FieldError>
+          <FieldError className="mt-1 text-sm text-destructive">
+            {errors.dueDate}
+          </FieldError>
         </div>
 
-  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Hours</label>
+        <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">
+          Hours
+        </label>
         <div className="flex flex-col">
           <Input
             id="task-hours"
@@ -115,10 +137,14 @@ export default function TaskForm() {
             onChange={handleChange}
             aria-invalid={!!errors.hours}
           />
-          <FieldError className="mt-1 text-sm text-destructive">{errors.hours}</FieldError>
+          <FieldError className="mt-1 text-sm text-destructive">
+            {errors.hours}
+          </FieldError>
         </div>
 
-  <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">Status</label>
+        <label className="text-left sm:text-right pr-2 sm:pr-4 text-sm font-medium">
+          Status
+        </label>
         <div className="flex flex-col">
           <Select onValueChange={handleSelectChange} value={values.status}>
             <SelectTrigger className="w-full" aria-invalid={!!errors.status}>
@@ -132,10 +158,12 @@ export default function TaskForm() {
               <SelectItem value="Cancelled">Cancelled</SelectItem>
             </SelectContent>
           </Select>
-          <FieldError className="mt-1 text-sm text-destructive">{errors.status}</FieldError>
+          <FieldError className="mt-1 text-sm text-destructive">
+            {errors.status}
+          </FieldError>
         </div>
       </div>
       {/* Assign button will live in the SheetFooter (outside the form) via form id submit; keep form minimal */}
     </form>
-  )
+  );
 }

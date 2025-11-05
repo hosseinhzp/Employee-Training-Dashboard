@@ -1,25 +1,35 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Trash, ArrowUp, CheckSquare, X, Users as UsersIcon } from "lucide-react"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Trash,
+  ArrowUp,
+  CheckSquare,
+  X,
+  Users as UsersIcon,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
-import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
+} from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 interface SelectionToolbarProps {
-  selectedCount: number
-  onDelete: () => void
-  onUpdatePriority?: (priority: "Low" | "Medium" | "High") => void
+  selectedCount: number;
+  onDelete: () => void;
+  onUpdatePriority?: (priority: "Low" | "Medium" | "High") => void;
   onUpdateStatus?: (
-    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled"
-  ) => void
-  onUpdateRole?: (role: "Employee" | "Manager" | "HR" | "Admin") => void
-  onClose: () => void
+    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled",
+  ) => void;
+  onUpdateRole?: (role: "Employee" | "Manager" | "HR" | "Admin") => void;
+  onClose: () => void;
 }
 
 export default function SelectionToolbar({
@@ -31,9 +41,11 @@ export default function SelectionToolbar({
   onClose,
 }: SelectionToolbarProps) {
   return (
-  <div className="mt-4 flex justify-center">
+    <div className="mt-4 flex justify-center">
       <div className="inline-flex items-center gap-1 rounded-sm border bg-muted p-1 text-sm">
-        <div className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium">{selectedCount}</div>
+        <div className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium">
+          {selectedCount}
+        </div>
         {onUpdatePriority && (
           <DropdownMenu>
             <Tooltip>
@@ -51,8 +63,12 @@ export default function SelectionToolbar({
               <TooltipContent sideOffset={4}>Update priority</TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
-              {( ["Low", "Medium", "High"] as const ).map((p) => (
-                <DropdownMenuItem key={p} className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => onUpdatePriority(p)}>
+              {(["Low", "Medium", "High"] as const).map((p) => (
+                <DropdownMenuItem
+                  key={p}
+                  className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                  onClick={() => onUpdatePriority(p)}
+                >
                   {p}
                 </DropdownMenuItem>
               ))}
@@ -74,11 +90,25 @@ export default function SelectionToolbar({
                   </Button>
                 </DropdownMenuTrigger>
               </TooltipTrigger>
-              <TooltipContent sideOffset={4}>Update training status</TooltipContent>
+              <TooltipContent sideOffset={4}>
+                Update training status
+              </TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
-              {( ["Assigned", "In Progress", "Completed", "Overdue", "Cancelled"] as const ).map((s) => (
-                <DropdownMenuItem key={s} className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => onUpdateStatus(s)}>
+              {(
+                [
+                  "Assigned",
+                  "In Progress",
+                  "Completed",
+                  "Overdue",
+                  "Cancelled",
+                ] as const
+              ).map((s) => (
+                <DropdownMenuItem
+                  key={s}
+                  className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                  onClick={() => onUpdateStatus(s)}
+                >
                   {s}
                 </DropdownMenuItem>
               ))}
@@ -103,18 +133,27 @@ export default function SelectionToolbar({
               <TooltipContent sideOffset={4}>Update role</TooltipContent>
             </Tooltip>
             <DropdownMenuContent align="end">
-              {( ["Employee", "Manager", "HR", "Admin"] as const ).map((r) => (
-                  <DropdownMenuItem key={r} className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800" onClick={() => onUpdateRole(r)}>
-                    {r}
-                  </DropdownMenuItem>
-                ))}
+              {(["Employee", "Manager", "HR", "Admin"] as const).map((r) => (
+                <DropdownMenuItem
+                  key={r}
+                  className="text-sm hover:bg-slate-100 dark:hover:bg-slate-800"
+                  onClick={() => onUpdateRole(r)}
+                >
+                  {r}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
         )}
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="destructive" onClick={onDelete} className="h-8 w-8 p-0 flex items-center justify-center hover:bg-red-600/10 transition-colors" aria-label="Delete selected">
+            <Button
+              variant="destructive"
+              onClick={onDelete}
+              className="h-8 w-8 p-0 flex items-center justify-center hover:bg-red-600/10 transition-colors"
+              aria-label="Delete selected"
+            >
               <Trash className="w-4 h-4" />
             </Button>
           </TooltipTrigger>
@@ -123,7 +162,12 @@ export default function SelectionToolbar({
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="ghost" onClick={onClose} className="h-8 w-8 p-0 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Close selection">
+            <Button
+              variant="ghost"
+              onClick={onClose}
+              className="h-8 w-8 p-0 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Close selection"
+            >
               <X className="w-4 h-4" />
             </Button>
           </TooltipTrigger>
@@ -131,5 +175,5 @@ export default function SelectionToolbar({
         </Tooltip>
       </div>
     </div>
-  )
+  );
 }

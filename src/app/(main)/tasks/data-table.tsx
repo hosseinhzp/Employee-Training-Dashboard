@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 /*
   DataTable (client)
@@ -24,7 +24,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -33,7 +33,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
 import {
   DropdownMenu,
@@ -41,67 +41,77 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { SortDesc, RefreshCw, CheckCircle, AlertCircle, Clock, XCircle, ArrowUp, ArrowDown, Minus } from "lucide-react"
-import PaginationComponent from "./pagination"
-import SelectionToolbar from "@/components/ui/selection-toolbar"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  SortDesc,
+  RefreshCw,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+  XCircle,
+  ArrowUp,
+  ArrowDown,
+  Minus,
+} from "lucide-react";
+import PaginationComponent from "./pagination";
+import SelectionToolbar from "@/components/ui/selection-toolbar";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [statusFilter, setStatusFilter] = React.useState<string[]>(() => [])
+  const [statusFilter, setStatusFilter] = React.useState<string[]>(() => []);
 
-   /* UI filter state (multi-select)
+  /* UI filter state (multi-select)
      - statusFilter: selected status values (e.g. ["In Progress", "Completed"]) */
   const toggle = (arr: string[], val: string) => {
-    if (arr.includes(val)) return arr.filter((v) => v !== val)
-    return [...arr, val]
-  }
+    if (arr.includes(val)) return arr.filter((v) => v !== val);
+    return [...arr, val];
+  };
   // helper to compute counts for each value (counts are from the provided `data` prop)
   const getCount = (key: string, val: string) => {
     try {
-      return (data as any[]).filter((d) => d?.[key] === val).length
+      return (data as any[]).filter((d) => d?.[key] === val).length;
     } catch {
-      return 0
+      return 0;
     }
-  }
+  };
 
   // map status -> icon component (training statuses) — align with columns.tsx
   const statusIcon = (s: string) => {
     switch (s) {
       case "In Progress":
-        return <RefreshCw className="w-4 h-4 text-gray-400" />
+        return <RefreshCw className="w-4 h-4 text-gray-400" />;
       case "Completed":
-        return <CheckCircle className="w-4 h-4 text-gray-400" />
+        return <CheckCircle className="w-4 h-4 text-gray-400" />;
       case "Overdue":
-        return <AlertCircle className="w-4 h-4 text-gray-400" />
+        return <AlertCircle className="w-4 h-4 text-gray-400" />;
       case "Cancelled":
-        return <XCircle className="w-4 h-4 text-gray-400" />
+        return <XCircle className="w-4 h-4 text-gray-400" />;
       case "Assigned":
-        return <Minus className="w-4 h-4 text-gray-400" />
+        return <Minus className="w-4 h-4 text-gray-400" />;
       default:
-        return <Clock className="w-4 h-4 text-gray-400" />
+        return <Clock className="w-4 h-4 text-gray-400" />;
     }
-  }
-  const [sorting, setSorting] = React.useState<SortingState>([])
-   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  };
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -120,28 +130,33 @@ export function DataTable<TData, TValue>({
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
-  const selectedCount = Object.keys(rowSelection).length
+  const selectedCount = Object.keys(rowSelection).length;
 
   const handleDelete = () => {
-    if (!selectedCount) return
-    if (!confirm(`Delete ${selectedCount} selected task(s)?`)) return
+    if (!selectedCount) return;
+    if (!confirm(`Delete ${selectedCount} selected task(s)?`)) return;
     // Placeholder: wire to backend or state update
-    console.log("Deleting rows:", Object.keys(rowSelection))
-    setRowSelection({})
-  }
+    console.log("Deleting rows:", Object.keys(rowSelection));
+    setRowSelection({});
+  };
 
   const handleUpdateStatus = (
-    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled"
+    status: "Assigned" | "In Progress" | "Completed" | "Overdue" | "Cancelled",
   ) => {
-    if (!selectedCount) return
+    if (!selectedCount) return;
     // Placeholder: wire to backend or state update
-    console.log("Update training status to", status, "for:", Object.keys(rowSelection))
-    setRowSelection({})
-  }
+    console.log(
+      "Update training status to",
+      status,
+      "for:",
+      Object.keys(rowSelection),
+    );
+    setRowSelection({});
+  };
 
-  const handleCloseSelection = () => setRowSelection({})
+  const handleCloseSelection = () => setRowSelection({});
 
   return (
     <div>
@@ -152,8 +167,8 @@ export function DataTable<TData, TValue>({
           value={(table.getColumn("course")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
             // apply filter to course and assignee for better discoverability
-            table.getColumn("course")?.setFilterValue(event.target.value)
-            table.getColumn("assignee")?.setFilterValue(event.target.value)
+            table.getColumn("course")?.setFilterValue(event.target.value);
+            table.getColumn("assignee")?.setFilterValue(event.target.value);
           }}
           className="max-w-sm"
         />
@@ -175,9 +190,9 @@ export function DataTable<TData, TValue>({
               <DropdownMenuItem
                 key={s}
                 onClick={() => {
-                  const next = toggle(statusFilter, s)
-                  setStatusFilter(next)
-                  table.getColumn("status")?.setFilterValue(next)
+                  const next = toggle(statusFilter, s);
+                  setStatusFilter(next);
+                  table.getColumn("status")?.setFilterValue(next);
                 }}
               >
                 <div className="flex items-center justify-between w-full">
@@ -186,9 +201,9 @@ export function DataTable<TData, TValue>({
                       checked={statusFilter.includes(s)}
                       onClick={(e) => e.stopPropagation()}
                       onCheckedChange={() => {
-                        const next = toggle(statusFilter, s)
-                        setStatusFilter(next)
-                        table.getColumn("status")?.setFilterValue(next)
+                        const next = toggle(statusFilter, s);
+                        setStatusFilter(next);
+                        table.getColumn("status")?.setFilterValue(next);
                       }}
                       aria-label={`Filter status ${s}`}
                       className="cursor-pointer"
@@ -196,7 +211,9 @@ export function DataTable<TData, TValue>({
                     {statusIcon(s)}
                     <span className="ml-1">{s}</span>
                   </div>
-                  <span className="ml-4 text-sm text-muted-foreground">{getCount("status", s)}</span>
+                  <span className="ml-4 text-sm text-muted-foreground">
+                    {getCount("status", s)}
+                  </span>
                 </div>
               </DropdownMenuItem>
             ))}
@@ -214,9 +231,7 @@ export function DataTable<TData, TValue>({
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
+              .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -229,7 +244,7 @@ export function DataTable<TData, TValue>({
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -247,10 +262,10 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -264,14 +279,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -293,5 +314,5 @@ export function DataTable<TData, TValue>({
         <PaginationComponent table={table} />
       </div>
     </div>
-  )
+  );
 }

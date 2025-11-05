@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { TrendingUp } from "lucide-react"
-import { Pie, PieChart } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { Pie, PieChart } from "recharts";
 
 import {
   Card,
@@ -10,15 +10,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-export const description = "Employee training distribution by course type"
+export const description = "Employee training distribution by course type";
 
 const chartData = [
   { category: "Technical", hours: 320, fill: "var(--color-technical)" },
@@ -26,7 +26,7 @@ const chartData = [
   { category: "Leadership", hours: 190, fill: "var(--color-leadership)" },
   { category: "Compliance", hours: 140, fill: "var(--color-compliance)" },
   { category: "Other", hours: 90, fill: "var(--color-other)" },
-]
+];
 
 const chartConfig = {
   hours: {
@@ -52,7 +52,7 @@ const chartConfig = {
     label: "Other",
     color: "var(--chart-5)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function AppPieChart() {
   return (
@@ -90,5 +90,5 @@ export function AppPieChart() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

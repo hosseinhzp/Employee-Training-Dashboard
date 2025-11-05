@@ -1,7 +1,7 @@
-import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/ThemeProvider"
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,14 +23,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html lang="en" className="light" style={{ colorScheme: "light" }}>
       <head>
         {/* Primary SVG favicon (scalable) */}
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         {/* PNG fallback for older browsers / pinned tiles */}
-        <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+        <link
+          rel="icon"
+          href="/favicon-32.png"
+          sizes="32x32"
+          type="image/png"
+        />
         {/* Traditional ICO fallback (very old browsers) */}
         <link rel="icon" href="/favicon.ico" />
         {/* Safari pinned tab (macOS) — provide a monochrome SVG and a color */}
@@ -42,15 +46,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
         suppressHydrationWarning={true}
       >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

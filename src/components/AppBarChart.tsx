@@ -1,6 +1,6 @@
-"use client"
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+"use client";
+import { TrendingUp } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -8,14 +8,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-export const description = "A multiple bar chart"
+} from "@/components/ui/chart";
+export const description = "A multiple bar chart";
 const chartData = [
   { month: "January", CoursesCompleted: 186, CoursesStarted: 80 },
   { month: "February", CoursesCompleted: 305, CoursesStarted: 200 },
@@ -28,8 +28,8 @@ const chartData = [
   { month: "September", CoursesCompleted: 237, CoursesStarted: 120 },
   { month: "October", CoursesCompleted: 73, CoursesStarted: 190 },
   { month: "November", CoursesCompleted: 209, CoursesStarted: 130 },
-  { month: "December", CoursesCompleted: 214, CoursesStarted: 140 }
-]
+  { month: "December", CoursesCompleted: 214, CoursesStarted: 140 },
+];
 const chartConfig = {
   CoursesCompleted: {
     label: "Courses Completed",
@@ -39,7 +39,7 @@ const chartConfig = {
     label: "Courses Started",
     color: "var(--chart-2)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 export function AppBarChart() {
   return (
     <Card>
@@ -62,7 +62,7 @@ export function AppBarChart() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              />
+            />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
@@ -73,5 +73,5 @@ export function AppBarChart() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

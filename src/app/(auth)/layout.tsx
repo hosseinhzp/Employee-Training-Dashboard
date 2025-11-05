@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex min-h-screen bg-white dark:bg-background">
       {/* LEFT */}
@@ -11,7 +15,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="flex flex-col">
           <Link href="/" className="flex items-center justify-center gap-4">
             <Image src="/icon.svg" alt="Logo" width={50} height={50} />
-            <h1 className='text-3xl font-semibold font-sans'>AceDesign</h1>
+            <h1 className="text-3xl font-semibold font-sans">AceDesign</h1>
           </Link>
           <div className="flex flex-col items-center">
             <p>A refined dashboard concept showcasing</p>
@@ -20,5 +24,5 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
       </div>
     </div>
-  )
+  );
 }

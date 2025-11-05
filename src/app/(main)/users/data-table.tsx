@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ColumnDef,
@@ -11,7 +11,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -20,7 +20,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
 import {
   DropdownMenu,
@@ -28,64 +28,78 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
 
-import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { SortDesc, RefreshCw, CheckCircle, XCircle, ArrowUp, ArrowDown, Minus, CircleOff, Circle, CreditCard, Users, UserCheck, Shield } from "lucide-react"
-import PaginationComponent from "./pagination"
-import SelectionToolbar from "@/components/ui/selection-toolbar"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  SortDesc,
+  RefreshCw,
+  CheckCircle,
+  XCircle,
+  ArrowUp,
+  ArrowDown,
+  Minus,
+  CircleOff,
+  Circle,
+  CreditCard,
+  Users,
+  UserCheck,
+  Shield,
+} from "lucide-react";
+import PaginationComponent from "./pagination";
+import SelectionToolbar from "@/components/ui/selection-toolbar";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [roleFilter, setRoleFilter] = React.useState<string[]>(() => [])
+  const [roleFilter, setRoleFilter] = React.useState<string[]>(() => []);
 
   const toggle = (arr: string[], val: string) => {
-    if (arr.includes(val)) return arr.filter((v) => v !== val)
-    return [...arr, val]
-  }
+    if (arr.includes(val)) return arr.filter((v) => v !== val);
+    return [...arr, val];
+  };
 
   const getCount = (key: string, val: string) => {
     try {
-      return (data as any[]).filter((d) => d?.[key] === val).length
+      return (data as any[]).filter((d) => d?.[key] === val).length;
     } catch {
-      return 0
+      return 0;
     }
-  }
+  };
 
   // map status -> icon component
   const roleIcon = (r: string) => {
     switch (r) {
       case "Employee":
-        return <Users className="w-4 h-4 text-gray-400" />
+        return <Users className="w-4 h-4 text-gray-400" />;
       case "Manager":
-        return <Users className="w-4 h-4 text-gray-400" />
+        return <Users className="w-4 h-4 text-gray-400" />;
       case "Admin":
-        return <UserCheck className="w-4 h-4 text-gray-400" />
+        return <UserCheck className="w-4 h-4 text-gray-400" />;
       case "HR":
-        return <Shield className="w-4 h-4 text-gray-400" />
+        return <Shield className="w-4 h-4 text-gray-400" />;
       default:
-        return null
+        return null;
     }
-  }
+  };
 
-  const [sorting, setSorting] = React.useState<SortingState>([])
-   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-    const [rowSelection, setRowSelection] = React.useState({})
+    React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
@@ -104,28 +118,28 @@ export function DataTable<TData, TValue>({
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
-  const selectedCount = Object.keys(rowSelection).length
+  const selectedCount = Object.keys(rowSelection).length;
 
   const handleDelete = () => {
-    if (!selectedCount) return
-    if (!confirm(`Delete ${selectedCount} selected user(s)?`)) return
+    if (!selectedCount) return;
+    if (!confirm(`Delete ${selectedCount} selected user(s)?`)) return;
     // Placeholder: wire to backend or state update
-    console.log("Deleting rows:", Object.keys(rowSelection))
-    setRowSelection({})
-  }
+    console.log("Deleting rows:", Object.keys(rowSelection));
+    setRowSelection({});
+  };
 
   const handleUpdateRole = (
-    status: "Employee" | "Manager" | "HR" | "Admin"
+    status: "Employee" | "Manager" | "HR" | "Admin",
   ) => {
-    if (!selectedCount) return
+    if (!selectedCount) return;
     // Placeholder: wire to backend or state update
-    console.log("Update status to", status, "for:", Object.keys(rowSelection))
-    setRowSelection({})
-  }
+    console.log("Update status to", status, "for:", Object.keys(rowSelection));
+    setRowSelection({});
+  };
 
-  const handleCloseSelection = () => setRowSelection({})
+  const handleCloseSelection = () => setRowSelection({});
 
   return (
     <div>
@@ -147,18 +161,13 @@ export function DataTable<TData, TValue>({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            {[
-              "Employee",
-              "Manager",
-              "HR",
-              "Admin",
-            ].map((r) => (
+            {["Employee", "Manager", "HR", "Admin"].map((r) => (
               <DropdownMenuItem
                 key={r}
                 onClick={() => {
-                  const next = toggle(roleFilter, r)
-                  setRoleFilter(next)
-                  table.getColumn("role")?.setFilterValue(next)
+                  const next = toggle(roleFilter, r);
+                  setRoleFilter(next);
+                  table.getColumn("role")?.setFilterValue(next);
                 }}
               >
                 <div className="flex items-center justify-between w-full">
@@ -167,9 +176,9 @@ export function DataTable<TData, TValue>({
                       checked={roleFilter.includes(r)}
                       onClick={(e) => e.stopPropagation()}
                       onCheckedChange={() => {
-                        const next = toggle(roleFilter, r)
-                        setRoleFilter(next)
-                        table.getColumn("role")?.setFilterValue(next)
+                        const next = toggle(roleFilter, r);
+                        setRoleFilter(next);
+                        table.getColumn("role")?.setFilterValue(next);
                       }}
                       aria-label={`Filter role ${r}`}
                       className="cursor-pointer"
@@ -177,7 +186,9 @@ export function DataTable<TData, TValue>({
                     {roleIcon(r)}
                     <span className="ml-1">{r}</span>
                   </div>
-                  <span className="ml-4 text-sm text-muted-foreground">{getCount("role", r)}</span>
+                  <span className="ml-4 text-sm text-muted-foreground">
+                    {getCount("role", r)}
+                  </span>
                 </div>
               </DropdownMenuItem>
             ))}
@@ -193,9 +204,7 @@ export function DataTable<TData, TValue>({
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
+              .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -208,7 +217,7 @@ export function DataTable<TData, TValue>({
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
@@ -226,10 +235,10 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -243,14 +252,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
@@ -272,5 +287,5 @@ export function DataTable<TData, TValue>({
         <PaginationComponent table={table} />
       </div>
     </div>
-  )
+  );
 }
