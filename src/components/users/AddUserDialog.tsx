@@ -16,14 +16,12 @@ import UserForm from "@/components/users/UserForm";
 export default function AddUserDialog() {
   const handleOpenChange = (open: boolean) => {
     if (open) {
-      // give browser a moment for the overlay to render and animate
       setTimeout(() => {
         const el = document.querySelector(
           '[data-slot="dialog-content"]',
         ) as HTMLElement | null;
         if (el) {
           const rect = el.getBoundingClientRect();
-          // log bounding rect and className so you can inspect size & placement in the browser console
           console.log("[OverlayLogger] Add User dialog opened", {
             rect,
             className: el.className,
@@ -49,7 +47,7 @@ export default function AddUserDialog() {
         <DialogHeader className="gap-1">
           <DialogTitle>Add New User</DialogTitle>
           <DialogDescription>
-            Create new user here. Click save when you're done.
+            Create new user here. Click save when you are done.
           </DialogDescription>
         </DialogHeader>
         <UserForm />

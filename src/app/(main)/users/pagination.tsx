@@ -11,8 +11,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-type Props = {
-  table: Table<any>;
+type Props<T> = {
+  table: Table<T>;
 };
 
 function buildPages(pageIndex: number, pageCount: number) {
@@ -40,7 +40,7 @@ function buildPages(pageIndex: number, pageCount: number) {
   return pages;
 }
 
-const PaginationComponent: React.FC<Props> = ({ table }) => {
+function PaginationComponent<T>({ table }: Props<T>) {
   const pageCount = table.getPageCount();
   const pageIndex = table.getState().pagination?.pageIndex ?? 0;
 

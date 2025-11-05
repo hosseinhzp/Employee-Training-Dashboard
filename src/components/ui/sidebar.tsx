@@ -518,7 +518,8 @@ function SidebarMenuButton({
   // an `aria-expanded` prop. Collapsible providers (Radix, etc.) inject that
   // prop into the trigger when `asChild` is used.
   // intercept clicks to close the mobile sheet when a navigation item is clicked
-  const { onClick: _onClick, ...rest } = props as any;
+  const _onClick = (props as { onClick?: (e: React.MouseEvent) => void }).onClick;
+  const rest = props as React.ComponentProps<"button">;
 
   const handleClick = (event: React.MouseEvent) => {
     try {
@@ -705,7 +706,8 @@ function SidebarMenuSubButton({
 }) {
   const Comp = asChild ? Slot : "a";
 
-  const { onClick: _onClick, ...rest } = props as any;
+  const _onClick = (props as { onClick?: (e: React.MouseEvent) => void }).onClick;
+  const rest = props as React.ComponentProps<"a">;
   const { isMobile, setOpenMobile } = useSidebar();
 
   const handleClick = (event: React.MouseEvent) => {

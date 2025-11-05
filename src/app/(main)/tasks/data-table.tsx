@@ -66,8 +66,8 @@ export function DataTable<TData, TValue>({
   const statusCounts = React.useMemo(() => {
     const map: Record<string, number> = {};
     try {
-      (data as any[]).forEach((d) => {
-        const v = d?.status ?? "";
+      (data as Record<string, unknown>[]).forEach((d) => {
+        const v = String((d as Record<string, unknown>)?.status ?? "");
         map[v] = (map[v] || 0) + 1;
       });
     } catch {

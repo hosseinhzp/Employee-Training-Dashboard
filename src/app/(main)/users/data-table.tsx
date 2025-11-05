@@ -63,8 +63,8 @@ export function DataTable<TData, TValue>({
   const roleCounts = React.useMemo(() => {
     const map: Record<string, number> = {};
     try {
-      (data as any[]).forEach((d) => {
-        const v = d?.role ?? "";
+      (data as Record<string, unknown>[]).forEach((d) => {
+        const v = String((d as Record<string, unknown>)?.role ?? "");
         map[v] = (map[v] || 0) + 1;
       });
     } catch {

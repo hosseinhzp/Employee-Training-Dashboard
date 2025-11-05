@@ -31,7 +31,7 @@ const ResetPasswordPage = () => {
         <div className="mb-5 sm:mb-8">
           <h1 className="text-4xl font-bold">Forgot Your Password?</h1>
           <p className="text-sm text-muted-foreground mt-3">
-            Enter the email address linked to your account, and we'll send you a
+            Enter the email address linked to your account, and we will send you a
             link to reset your password.
           </p>
         </div>

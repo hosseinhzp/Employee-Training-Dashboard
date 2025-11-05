@@ -8,7 +8,7 @@ import { DialogClose } from "@/components/ui/dialog";
 import { useForm } from "@/hooks/useForm";
 
 export default function ProfileForm() {
-  const { values, setValues, handleChange } = useForm({
+  const { values, handleChange } = useForm({
     displayName: "",
     jobTitle: "",
     location: "",

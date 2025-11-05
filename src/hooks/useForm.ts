@@ -1,20 +1,19 @@
 import * as React from "react";
 
-// Small reusable form helper to reduce repeated state boilerplate across forms.
-// Keeps the same public behavior (values/errors) but provides a shared change handler
-// and a convenience setter for non-input value changes (selects, custom components).
-export function useForm<T extends Record<string, any>>(initial: T) {
+export function useForm<T extends Record<string, unknown>>(initial: T) {
   const [values, setValues] = React.useState<T>(initial);
   const [errors, setErrors] = React.useState<Partial<Record<string, string>>>({});
 
   const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target as any;
-    setValues((s) => ({ ...s, [name]: value }));
+    const target = e.target as HTMLInputElement;
+    const name = target.name;
+    const value = target.value;
+    setValues((s) => ({ ...s, [name]: value } as T));
     setErrors((s) => ({ ...s, [name]: undefined }));
   }, []);
 
-  const setFieldValue = React.useCallback((name: string, value: any) => {
-    setValues((s) => ({ ...s, [name]: value }));
+  const setFieldValue = React.useCallback((name: string, value: unknown) => {
+    setValues((s) => ({ ...s, [name]: value } as T));
     setErrors((s) => ({ ...s, [name]: undefined }));
   }, []);
 

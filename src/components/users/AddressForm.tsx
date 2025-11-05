@@ -6,7 +6,6 @@ import {
   Field,
   FieldLabel,
   FieldContent,
-  FieldError,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@/components/ui/dialog";
@@ -25,7 +24,6 @@ export default function AddressForm() {
   };
   const handleSave = (e?: React.FormEvent) => {
     e?.preventDefault();
-    // No required validation for address edit — allow save
     console.log("Saved address (mock)", values);
     alert("Saved (mock)");
   };

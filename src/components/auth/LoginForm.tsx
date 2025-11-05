@@ -43,7 +43,6 @@ export default function LoginForm() {
       try {
         // Frontend-only: simulate network request
         await new Promise((r) => setTimeout(r, 800));
-        // In a real app, replace with your auth call (fetch/axios/next-auth)
         setSuccess("Signed in (simulated).");
         console.log("Login payload:", form);
       } catch (err) {
@@ -124,7 +123,7 @@ export default function LoginForm() {
         )}
 
         <span className="mt-3 text-center">
-          Don't have an account?{" "}
+          Do not have an account?{" "}
           <a href="/register" className="text-blue-500 hover:underline">
             Sign Up
           </a>

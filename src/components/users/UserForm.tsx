@@ -20,7 +20,7 @@ import { DialogClose } from "@/components/ui/dialog";
 import { useForm } from "@/hooks/useForm";
 
 export default function UserForm() {
-  const { values, setValues, errors, setErrors, handleChange, setFieldValue } =
+  const { values, errors, setErrors, handleChange, setFieldValue } =
     useForm({
       name: "",
       username: "",
