@@ -47,7 +47,7 @@ export function AppBarChart() {
         <CardTitle>Training Overview</CardTitle>
       </CardHeader>
       <CardContent className="flex-1">
-        <ChartContainer className="h-full aspect-auto" config={chartConfig}>
+        <ChartContainer className="w-full h-64" config={chartConfig}>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
