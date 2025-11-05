@@ -1,10 +1,24 @@
+"use client"
+
 import { Button } from '@/components/ui/button'
 import { Pencil } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
+import ProfileForm from '@/components/users/ProfileForm'
+import PersonalInfoForm from '@/components/users/PersonalInfoForm'
+import AddressForm from '@/components/users/AddressForm'
 
 const ProfilePage = () => {
+
   return (
     <div className='container max-w-7xl mx-auto px-6 py-10'>
       <h1 className='font-bold text-2xl mb-4'>Profile</h1>
@@ -13,10 +27,22 @@ const ProfilePage = () => {
       <div className='mb-6 rounded-2xl bg-sidebar border border-gray-200 p-5 lg:p-6 dark:border-gray-800'>
         <div className='flex flex-col items-center gap-2 mb-4 xl:flex-row xl:items-start xl:justify-between'>
           <h1 className='font-semibold text-lg text-center xl:text-left'>Profile</h1>
-          <Button className='hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full' aria-label='Edit profile'>
-            <Pencil />
-            Edit
-          </Button>
+          {/* DialogTrigger for desktop edit button — profile (includes social links) */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className='hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full' aria-label='Edit profile'>
+                <Pencil />
+                Edit
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>Update profile details and social links</DialogDescription>
+              </DialogHeader>
+              <ProfileForm />
+            </DialogContent>
+          </Dialog>
         </div>
         <div className='flex flex-col items-center gap-4 xl:flex-row xl:items-center'>
           <div className="relative rounded-full overflow-hidden w-35 h-35">
@@ -51,10 +77,22 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className='mt-4 flex justify-center xl:justify-end'>
-          <Button className='w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden' aria-label='Edit profile'>
-            <Pencil />
-            Edit
-          </Button>
+          {/* mobile trigger — profile (includes social links) */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className='w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden' aria-label='Edit profile'>
+                <Pencil />
+                Edit
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>Update profile details and social links</DialogDescription>
+              </DialogHeader>
+              <ProfileForm />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -62,10 +100,22 @@ const ProfilePage = () => {
       <div className='mb-6 rounded-2xl bg-sidebar border border-gray-200 p-5 lg:p-6 dark:border-gray-800'>
         <div className='flex flex-col items-center gap-2 mb-4 xl:flex-row xl:items-start xl:justify-between'>
           <h1 className='font-semibold text-lg text-center xl:text-left'>Personal Information</h1>
-          <Button className='hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full' aria-label='Edit personal information'>
-            <Pencil />
-            Edit
-          </Button>
+          {/* desktop trigger — personal information (no social links) */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className='hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full' aria-label='Edit personal information'>
+                <Pencil />
+                Edit
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit personal information</DialogTitle>
+                <DialogDescription>Update personal information fields</DialogDescription>
+              </DialogHeader>
+              <PersonalInfoForm />
+            </DialogContent>
+          </Dialog>
         </div>
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32'>
           <div>
@@ -90,10 +140,22 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className='mt-4 flex justify-center xl:justify-end'>
-          <Button className='w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden' aria-label='Edit personal information'>
-            <Pencil />
-            Edit
-          </Button>
+          {/* mobile trigger — personal information (no social links) */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className='w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden' aria-label='Edit personal information'>
+                <Pencil />
+                Edit
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit personal information</DialogTitle>
+                <DialogDescription>Update personal information fields</DialogDescription>
+              </DialogHeader>
+              <PersonalInfoForm />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       
@@ -101,10 +163,22 @@ const ProfilePage = () => {
       <div className='rounded-2xl bg-sidebar border border-gray-200 p-5 lg:p-6 dark:border-gray-800'>
         <div className='flex flex-col items-center gap-2 mb-4 xl:flex-row xl:items-start xl:justify-between'>
           <h1 className='font-semibold text-lg text-center xl:text-left'>Address</h1>
-          <Button className='hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full' aria-label='Edit address'>
-            <Pencil />
-            Edit
-          </Button>
+          {/* address dialog - desktop trigger */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className='hidden xl:inline-flex ml-4 h-8 px-3 text-sm rounded-full' aria-label='Edit address'>
+                <Pencil />
+                Edit
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit address</DialogTitle>
+                <DialogDescription>Update address details</DialogDescription>
+              </DialogHeader>
+              <AddressForm />
+            </DialogContent>
+          </Dialog>
         </div>
         <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-7 2xl:gap-x-32'>
           <div>
@@ -125,10 +199,22 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className='mt-4 flex justify-center xl:justify-end'>
-          <Button className='w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden' aria-label='Edit address'>
-            <Pencil />
-            Edit
-          </Button>
+          {/* address dialog - mobile trigger */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className='w-full xl:w-auto h-8 px-3 text-sm rounded-full xl:hidden' aria-label='Edit address'>
+                <Pencil />
+                Edit
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit address</DialogTitle>
+                <DialogDescription>Update address details</DialogDescription>
+              </DialogHeader>
+              <AddressForm />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>

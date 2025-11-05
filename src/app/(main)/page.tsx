@@ -125,8 +125,8 @@ export default function Home() {
                   265 courses completed this month.
                 </CardDescription>
               </CardHeader>
-              {/* Recent completions list */}
-              {[
+              <CardContent className="space-y-7 mt-7">
+                {[
                 { name: "Emma Lopez", email: "emma.lopez@company.com", amount: "Leadership Basics" },
                 { name: "James Lee", email: "james.lee@company.com", amount: "Time Management" },
                 { name: "Sophia Brown", email: "sophia.brown@company.com", amount: "Advanced Excel" },
@@ -136,6 +136,7 @@ export default function Home() {
               ].map((item, i) => (
                 <RecentTrainingItem key={i} {...item} />
               ))}
+              </CardContent>
             </Card>
           </div>
 
