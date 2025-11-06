@@ -1,15 +1,10 @@
+"use client";
+
 import {
-  AppWindowIcon,
-  BellRing,
-  Bug,
   ChevronRight,
-  CircleParking,
-  CreditCard,
-  HelpCircle,
   LayoutDashboard,
   ListTodo,
   LogOut,
-  MessageSquare,
   Settings,
   ShieldCheck,
   User2,
@@ -30,6 +25,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "./ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
@@ -52,12 +48,26 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 type Item = { title: string; url: string; icon: React.ElementType };
 
 const ProfileBlock = React.memo(function ProfileBlock({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <div className="flex items-center gap-4">
+        <Avatar className="h-8 w-8">
+          <AvatarImage src="/profile-photo.jpg" alt="Emma Lopez" />
+        </Avatar>
+        <div className="flex flex-col flex-1">
+        <span className="text-sm font-semibold">Emma Lopez</span>
+        <span className="text-xs text-muted-foreground">emma.lopez@example.com</span>
+      </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={compact ? "flex items-center gap-3" : "flex items-center gap-4"}>
-      <Avatar className={compact ? "h-8 w-8" : "h-10 w-10"}>
+    <div className="flex items-center gap-4">
+      <Avatar className="h-10 w-10">
         <AvatarImage src="/profile-photo.jpg" alt="Emma Lopez" />
       </Avatar>
-      <div className={compact ? "flex flex-col" : "flex flex-col flex-1"}>
+      <div className="flex flex-col flex-1">
         <span className="text-sm font-semibold">Emma Lopez</span>
         <span className="text-xs text-muted-foreground">emma.lopez@example.com</span>
       </div>
@@ -73,7 +83,7 @@ const items: Item[] = [
 ];
 
 const AppSideBar = () => {
-  // ProfileBlock is defined below (memoized) to avoid re-creating on each render
+  const { state } = useSidebar();
 
   return (
     <Sidebar collapsible="icon">
@@ -118,7 +128,6 @@ const AppSideBar = () => {
           <SidebarGroupContent>
             <SidebarMenu>
               <Collapsible className="group/collapsible">
-                {/* Use a native button as the collapsible trigger to avoid asChild prop forwarding complexity */}
                 <CollapsibleTrigger asChild>
                   <button
                     type="button"
@@ -167,44 +176,46 @@ const AppSideBar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      {/* Sidebar: Footer */}
-      <SidebarFooter>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="m-2 cursor-pointer" role="button" tabIndex={0}>
-              <ProfileBlock />
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent sideOffset={0} align="start" className="w-64">
-            <DropdownMenuLabel>
-              <ProfileBlock compact />
-            </DropdownMenuLabel>
+      {/* Sidebar: Footer (hidden when collapsed) */}
+      {state !== "collapsed" && (
+        <SidebarFooter>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div role="button" tabIndex={0} className="m-2 cursor-pointer">
+                <ProfileBlock />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent sideOffset={0} align="start" className="w-64">
+              <DropdownMenuLabel>
+                <ProfileBlock compact />
+              </DropdownMenuLabel>
 
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/profile" className="flex items-center">
-                <VerifiedIcon />
-                <span>Account</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Settings />
-              <span>Settings</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Users />
-              <span>New Team</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild variant="destructive">
-              <Link href="/login" className="flex items-center">
-                <LogOut />
-                <span>Sign Out</span>
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarFooter>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/profile" className="flex items-center">
+                  <VerifiedIcon />
+                  <span>Account</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Users />
+                <span>New Team</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild variant="destructive">
+                <Link href="/login" className="flex items-center">
+                  <LogOut />
+                  <span>Sign Out</span>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 };
